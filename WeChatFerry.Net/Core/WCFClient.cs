@@ -8,14 +8,14 @@ using WeChatFerry.Net.Models;
 
 namespace WeChatFerry.Net.Core
 {
-    public class WCFClient
+    public class WCFClient : IDisposable
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly int _port;
         private readonly IAPIFactory<INngMsg> _factory;
         private readonly IPairSocket _cmdSocket;
         private Task? _loopRecvMsgTask;
-        private CancellationTokenSource? _loopRecvMsgCTS;
+        //private CancellationTokenSource? _loopRecvMsgCTS;
 
         public event EventHandler<WxMsg>? OnRecvMsg;
 
@@ -28,6 +28,38 @@ namespace WeChatFerry.Net.Core
             _cmdSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{port}").Unwrap();
         }
 
+        public void Start()
+        {
+
+        }
+
+        public void Dispose()
+        {
+
+        }
+
+        private void LoopRecvMsg(CancellationToken token)
+        {
+            try
+            {
+                var msgSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_port + 1}").Unwrap();
+                if (msgSocket == null) return;
+
+                while (!token.IsCancellationRequested)
+                {
+                    var msg = msgSocket.RecvMsg().Unwrap();
+                    var data = msg.AsSpan().ToArray();
+                    var res = Response.Parser.ParseFrom(data);
+                    OnRecvMsg?.Invoke(this, res.Wxmsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "LoopRecvMsg failed");
+            }
+        }
+
+        #region RPC Functions
         public bool IsLogin()
         {
             try
@@ -42,45 +74,6 @@ namespace WeChatFerry.Net.Core
             {
                 _logger.Error(ex, "IsLogin failed");
                 return false;
-            }
-        }
-
-        public void EnableRecvTxt(bool enablePyq = false)
-        {
-            try
-            {
-                var req = new Request { Func = Functions.FuncEnableRecvTxt, Flag = enablePyq };
-                var res = CallRPC(req);
-                if (res.Status != 1) _logger.Warn($"EnableRecvTxt failed, status: {res.Status}");
-
-                if (_loopRecvMsgTask == null || _loopRecvMsgTask.IsCompleted || _loopRecvMsgTask.IsCanceled)
-                {
-                    _loopRecvMsgCTS = new CancellationTokenSource();
-                    _loopRecvMsgTask = Task.Run(() => LoopRecvMsg(_loopRecvMsgCTS.Token));
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "EnableRecvTxt failed");
-            }
-        }
-
-        public void DisableRecvTxt()
-        {
-            try
-            {
-                _loopRecvMsgCTS?.Cancel();
-                _loopRecvMsgTask?.Wait();
-                _loopRecvMsgCTS = null;
-                _loopRecvMsgTask = null;
-
-                var req = new Request { Func = Functions.FuncDisableRecvTxt };
-                var res = CallRPC(req);
-                if (res.Status != 1) _logger.Warn($"DisableRecvTxt failed, status: {res.Status}");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "DisableRecvTxt failed");
             }
         }
 
@@ -99,18 +92,68 @@ namespace WeChatFerry.Net.Core
             }
         }
 
+        public UserInfo? GetUserInfo()
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncGetUserInfo };
+                var res = CallRPC(req);
+                return res.Ui;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "GetUserInfo failed");
+                return null;
+            }
+        }
+
         public Dictionary<int, string> GetMsgTypes()
         {
             try
             {
                 var req = new Request { Func = Functions.FuncGetMsgTypes };
                 var res = CallRPC(req);
-                return res.Types_?.Types_?.ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<int, string>();
+                return res.Types_?.Types_?.ToDictionary(x => x.Key, x => x.Value) ?? [];
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "GetMsgTypes failed");
                 return new Dictionary<int, string>();
+            }
+        }
+
+
+        public bool EnableRecvTxt(bool enablePyq = false)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncEnableRecvTxt, Flag = enablePyq };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"EnableRecvTxt failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "EnableRecvTxt failed");
+                return false;
+            }
+        }
+
+        public bool DisableRecvTxt()
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncDisableRecvTxt };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"DisableRecvTxt failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "DisableRecvTxt failed");
+                return false;
             }
         }
 
@@ -120,7 +163,7 @@ namespace WeChatFerry.Net.Core
             {
                 var req = new Request { Func = Functions.FuncGetContacts };
                 var res = CallRPC(req);
-                return res.Contacts.Contacts.ToList();
+                return [.. res.Contacts.Contacts];
             }
             catch (Exception ex)
             {
@@ -159,57 +202,20 @@ namespace WeChatFerry.Net.Core
             }
         }
 
-        public DataTable? ExecDbQuery(string db, string sql)
+        public string GetAudioMsg(ulong id, string dir)
         {
             try
             {
-                var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
+                var req = new Request { Func = Functions.FuncGetAudioMsg, Am = new AudioMsg { Id = id, Dir = dir } };
                 var res = CallRPC(req);
-                if (res.Status != 1)
-                {
-                    _logger.Warn($"ExecDbQuery failed, status: {res.Status}");
-                    return null;
-                }
-                if (res.Rows == null)
-                {
-                    _logger.Error("ExecDbQuery failed, rows is null");
-                    return null;
-                }
-                var dt = new DataTable();
-                foreach (var r in res.Rows.Rows)
-                {
-                    var row = dt.NewRow();
-                    foreach (var item in r.Fields)
-                    {
-                        if (!dt.Columns.Contains(item.Column)) dt.Columns.Add(item.Column);
-                        row[item.Column] = item.Type == 4 ? item.Content.ToBase64() : item.Content.ToStringUtf8();
-                    }
-                    dt.Rows.Add(row);
-                }
-                return dt;
+                return res.Str;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "ExecDbQuery failed");
-                return null;
+                _logger.Error(ex, "GetAudioMsg failed");
+                return string.Empty;
             }
         }
-
-        public UserInfo? GetSelfInfo()
-        {
-            try
-            {
-                var req = new Request { Func = Functions.FuncGetUserInfo };
-                var res = CallRPC(req);
-                return res.Ui;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "GetSelfInfo failed");
-                return null;
-            }
-        }
-
 
         public bool SendTxt(string receiver, string msg, string aters = "")
         {
@@ -287,6 +293,34 @@ namespace WeChatFerry.Net.Core
             }
         }
 
+        [Obsolete("Not implemented in WeChatFerry")]
+        public bool SendXml(string receiver, string path, string content, ulong type)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendXml,
+                    Xml = new XmlMsg
+                    {
+                        Receiver = receiver,
+                        Path = path,
+                        Content = content,
+                        Type = type
+                    }
+                };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"SendXml failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "SendXml failed");
+                return false;
+            }
+        }
+
         public bool SendEmotion(string receiver, string path)
         {
             try
@@ -308,6 +342,48 @@ namespace WeChatFerry.Net.Core
             catch (Exception ex)
             {
                 _logger.Error(ex, "SendEmotion failed");
+                return false;
+            }
+        }
+
+        public bool SendRichTxt(RichText richText)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendRichTxt,
+                    Rt = richText
+                };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"SendRichTxt failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "SendRichTxt failed");
+                return false;
+            }
+        }
+
+        public bool SendPatMsg(string roomID, string wxid)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendPatMsg,
+                    Pm = new PatMsg { Roomid = roomID, Wxid = wxid }
+                };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"SendPat failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "SendPat failed");
                 return false;
             }
         }
@@ -337,68 +413,101 @@ namespace WeChatFerry.Net.Core
             }
         }
 
-        public bool SendRichTxt(RichText richText)
+        public DataTable? ExecDbQuery(string db, string sql)
         {
             try
             {
-                var req = new Request
-                {
-                    Func = Functions.FuncSendRichTxt,
-                    Rt = richText
-                };
+                var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
                 var res = CallRPC(req);
-                var ok = res.Status == 0;
-                if (!ok) _logger.Warn($"SendRichTxt failed, status: {res.Status}");
-                return ok;
+                if (res.Status != 1)
+                {
+                    _logger.Warn($"ExecDbQuery failed, status: {res.Status}");
+                    return null;
+                }
+                if (res.Rows == null)
+                {
+                    _logger.Error("ExecDbQuery failed, rows is null");
+                    return null;
+                }
+                var dt = new DataTable();
+                foreach (var r in res.Rows.Rows)
+                {
+                    var row = dt.NewRow();
+                    foreach (var item in r.Fields)
+                    {
+                        if (!dt.Columns.Contains(item.Column)) dt.Columns.Add(item.Column);
+                        row[item.Column] = item.Type == 4 ? item.Content.ToBase64() : item.Content.ToStringUtf8();
+                    }
+                    dt.Rows.Add(row);
+                }
+                return dt;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "SendRichTxt failed");
-                return false;
+                _logger.Error(ex, "ExecDbQuery failed");
+                return null;
             }
         }
 
-        public void AcceptFriend(string content)
-        {
-            var xml = new XmlDocument();
-            xml.LoadXml(content);
-            var v3 = xml.SelectSingleNode("/msg/@encryptusername")?.Value ?? "";
-            var v4 = xml.SelectSingleNode("/msg/@ticket")?.Value ?? "";
-            var scene = int.Parse(xml.SelectSingleNode("/msg/@scene")?.Value ?? "0");
-            AcceptFriend(v3, v4, scene);
-        }
-
-        public void AcceptFriend(string v3, string v4, int scene)
+        [Obsolete("Not implemented in WeChatFerry")]
+        public bool AcceptFriend(string v3, string v4, int scene)
         {
             try
             {
                 var req = new Request { Func = Functions.FuncAcceptFriend, V = new Verification { V3 = v3, V4 = v4, Scene = scene } };
                 var res = CallRPC(req);
-
+                var ok = res.Status == 1;
+                if (!ok) _logger.Warn($"AcceptFriend failed, status: {res.Status}");
+                return ok;
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "AcceptFriend failed");
+                return false;
             }
         }
 
-        public RpcContact? GetContactInfo(string wxid)
+        [Obsolete("Not implemented in WeChatFerry")]
+        public bool RecvTransfer(string wxid, string tfid, string taid)
         {
             try
             {
-                var req = new Request { Func = Functions.FuncGetContactInfo, Str = wxid };
-                var res = CallRPC(req);
-                if (res.Status != 1)
+                var req = new Request
                 {
-                    _logger.Warn($"GetContactInfo failed, status: {res.Status}");
-                    return null;
-                }
-                return res.Contacts?.Contacts?.FirstOrDefault();
+                    Func = Functions.FuncRecvTransfer,
+                    Tf = new Transfer
+                    {
+                        Wxid = wxid,
+                        Tfid = tfid,
+                        Taid = taid
+                    }
+                };
+                var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger.Warn($"RecvTransfer failed, status: {res.Status}");
+                return ok;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "GetContactInfo failed");
-                return null;
+                _logger.Error(ex, "RecvTransfer failed");
+                return false;
+            }
+        }
+
+        public bool RefreshPyq(ulong id = 0)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncRefreshPyq, Ui64 = id };
+                var res = CallRPC(req);
+                var ok = res.Status == 1;
+                if (!ok) _logger.Warn($"RefreshPyq failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "RefreshPyq failed");
+                return false;
             }
         }
 
@@ -409,12 +518,29 @@ namespace WeChatFerry.Net.Core
                 var req = new Request { Func = Functions.FuncDownloadAttach, Att = new AttachMsg { Id = id, Thumb = thumb, Extra = extra } };
                 var res = CallRPC(req);
                 var ok = res.Status == 0;
-                return res.Status == 0;
+                if (!ok) _logger.Warn($"DonwloadAttach failed, status: {res.Status}");
+                return ok;
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "DonwloadAttach failed");
                 return false;
+            }
+        }
+
+        [Obsolete("Not implemented in WeChatFerry")]
+        public RpcContact? GetContactInfo(string wxid)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncGetContactInfo, Str = wxid };
+                var res = CallRPC(req);
+                return res.Contacts?.Contacts?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "GetContactInfo failed");
+                return null;
             }
         }
 
@@ -457,6 +583,8 @@ namespace WeChatFerry.Net.Core
             }
         }
 
+        #endregion
+
         private Response CallRPC(Request request)
         {
             if (!_cmdSocket.IsValid()) throw new Exception("CMD socket is not valid");
@@ -466,25 +594,7 @@ namespace WeChatFerry.Net.Core
             return Response.Parser.ParseFrom(data);
         }
 
-        private void LoopRecvMsg(CancellationToken token)
-        {
-            try
-            {
-                var msgSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_port + 1}").Unwrap();
-                if (msgSocket == null) return;
 
-                while (!token.IsCancellationRequested)
-                {
-                    var msg = msgSocket.RecvMsg().Unwrap();
-                    var data = msg.AsSpan().ToArray();
-                    var res = Response.Parser.ParseFrom(data);
-                    OnRecvMsg?.Invoke(this, res.Wxmsg);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "LoopRecvMsg failed");
-            }
-        }
+
     }
 }
