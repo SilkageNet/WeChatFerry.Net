@@ -1,5 +1,3 @@
-using WeChatFerry.Net.Core;
-
 namespace WeChatFerry.Net.Tests
 {
     [TestClass]
@@ -8,7 +6,7 @@ namespace WeChatFerry.Net.Tests
         [TestMethod]
         public void Main()
         {
-            var skdManager = new SDKManager("path/to/sdk");
+            var skdManager = new WCFSDK("path/to/sdk");
             var ret = skdManager.WxInitSDK(false, 6666);
             Assert.AreEqual(0, ret);
             ret = skdManager.WxDestroySDK();

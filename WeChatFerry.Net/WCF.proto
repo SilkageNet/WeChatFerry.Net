@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package wcf;
 
-option csharp_namespace = "WeChatFerry.Net.Models";
+option csharp_namespace = "WeChatFerry.Net";
 
 enum Functions {
     FUNC_RESERVED         = 0x00;

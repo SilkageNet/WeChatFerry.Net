@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace WeChatFerry.Net.Core
+namespace WeChatFerry.Net
 {
-    public class SDKManager
+    public class WCFSDK
     {
         /// <summary>
         /// Inject SDK Delegate
@@ -28,12 +28,12 @@ namespace WeChatFerry.Net.Core
         /// </summary>
         public WxDestroySDKDelegate WxDestroySDK;
 
-        public SDKManager(string sdkPath)
+        public WCFSDK(string sdkPath)
         {
             if (!File.Exists(sdkPath)) throw new FileNotFoundException("SDK path not found", sdkPath);
 
             var ptr = NativeLibrary.Load(sdkPath);
-            if (ptr == IntPtr.Zero) throw new Exception("Load SDK failed");
+            if (ptr == nint.Zero) throw new Exception("Load SDK failed");
 
             var initPtr = NativeLibrary.GetExport(ptr, "WxInitSDK");
             var destoryPtr = NativeLibrary.GetExport(ptr, "WxDestroySDK");

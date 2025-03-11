@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace WeChatFerry.Net.Models {
+namespace WeChatFerry.Net {
 
   /// <summary>Holder for reflection information generated from WeChatFerry.Net/Protos/WCF.proto</summary>
   public static partial class WCFReflection {
@@ -105,36 +105,36 @@ namespace WeChatFerry.Net.Models {
             "V2VDaGF0RmVycnkuTmV0Lk1vZGVsc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::WeChatFerry.Net.Models.Functions), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.Request), global::WeChatFerry.Net.Models.Request.Parser, new[]{ "Func", "Empty", "Str", "Txt", "File", "Query", "V", "M", "Xml", "Dec", "Tf", "Ui64", "Flag", "Att", "Am", "Rt", "Pm", "Fm" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.Response), global::WeChatFerry.Net.Models.Response.Parser, new[]{ "Func", "Status", "Str", "Wxmsg", "Types_", "Contacts", "Dbs", "Tables", "Rows", "Ui", "Ocr" }, new[]{ "Msg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.Empty), global::WeChatFerry.Net.Models.Empty.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.WxMsg), global::WeChatFerry.Net.Models.WxMsg.Parser, new[]{ "IsSelf", "IsGroup", "Id", "Type", "Ts", "Roomid", "Content", "Sender", "Sign", "Thumb", "Extra", "Xml" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.TextMsg), global::WeChatFerry.Net.Models.TextMsg.Parser, new[]{ "Msg", "Receiver", "Aters" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.PathMsg), global::WeChatFerry.Net.Models.PathMsg.Parser, new[]{ "Path", "Receiver" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.XmlMsg), global::WeChatFerry.Net.Models.XmlMsg.Parser, new[]{ "Receiver", "Content", "Path", "Type" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.MsgTypes), global::WeChatFerry.Net.Models.MsgTypes.Parser, new[]{ "Types_" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.RpcContact), global::WeChatFerry.Net.Models.RpcContact.Parser, new[]{ "Wxid", "Code", "Remark", "Name", "Country", "Province", "City", "Gender" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.RpcContacts), global::WeChatFerry.Net.Models.RpcContacts.Parser, new[]{ "Contacts" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbNames), global::WeChatFerry.Net.Models.DbNames.Parser, new[]{ "Names" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbTable), global::WeChatFerry.Net.Models.DbTable.Parser, new[]{ "Name", "Sql" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbTables), global::WeChatFerry.Net.Models.DbTables.Parser, new[]{ "Tables" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbQuery), global::WeChatFerry.Net.Models.DbQuery.Parser, new[]{ "Db", "Sql" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbField), global::WeChatFerry.Net.Models.DbField.Parser, new[]{ "Type", "Column", "Content" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbRow), global::WeChatFerry.Net.Models.DbRow.Parser, new[]{ "Fields" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DbRows), global::WeChatFerry.Net.Models.DbRows.Parser, new[]{ "Rows" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.Verification), global::WeChatFerry.Net.Models.Verification.Parser, new[]{ "V3", "V4", "Scene" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.MemberMgmt), global::WeChatFerry.Net.Models.MemberMgmt.Parser, new[]{ "Roomid", "Wxids" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.UserInfo), global::WeChatFerry.Net.Models.UserInfo.Parser, new[]{ "Wxid", "Name", "Mobile", "Home" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.DecPath), global::WeChatFerry.Net.Models.DecPath.Parser, new[]{ "Src", "Dst" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.Transfer), global::WeChatFerry.Net.Models.Transfer.Parser, new[]{ "Wxid", "Tfid", "Taid" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.AttachMsg), global::WeChatFerry.Net.Models.AttachMsg.Parser, new[]{ "Id", "Thumb", "Extra" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.AudioMsg), global::WeChatFerry.Net.Models.AudioMsg.Parser, new[]{ "Id", "Dir" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.RichText), global::WeChatFerry.Net.Models.RichText.Parser, new[]{ "Name", "Account", "Title", "Digest", "Url", "Thumburl", "Receiver" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.PatMsg), global::WeChatFerry.Net.Models.PatMsg.Parser, new[]{ "Roomid", "Wxid" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.OcrMsg), global::WeChatFerry.Net.Models.OcrMsg.Parser, new[]{ "Status", "Result" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.ForwardMsg), global::WeChatFerry.Net.Models.ForwardMsg.Parser, new[]{ "Id", "Receiver" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.RoomData), global::WeChatFerry.Net.Models.RoomData.Parser, new[]{ "Members", "Field2", "Field3", "Field4", "Capacity", "Field6", "Field7", "Field8", "Admins" }, new[]{ "Field2", "Field4", "Field6" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Models.RoomData.Types.RoomMember), global::WeChatFerry.Net.Models.RoomData.Types.RoomMember.Parser, new[]{ "Wxid", "Name", "State" }, new[]{ "Name" }, null, null, null)})
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::WeChatFerry.Net.Functions), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Request), global::WeChatFerry.Net.Request.Parser, new[]{ "Func", "Empty", "Str", "Txt", "File", "Query", "V", "M", "Xml", "Dec", "Tf", "Ui64", "Flag", "Att", "Am", "Rt", "Pm", "Fm" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Response), global::WeChatFerry.Net.Response.Parser, new[]{ "Func", "Status", "Str", "Wxmsg", "Types_", "Contacts", "Dbs", "Tables", "Rows", "Ui", "Ocr" }, new[]{ "Msg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Empty), global::WeChatFerry.Net.Empty.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.WxMsg), global::WeChatFerry.Net.WxMsg.Parser, new[]{ "IsSelf", "IsGroup", "Id", "Type", "Ts", "Roomid", "Content", "Sender", "Sign", "Thumb", "Extra", "Xml" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.TextMsg), global::WeChatFerry.Net.TextMsg.Parser, new[]{ "Msg", "Receiver", "Aters" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.PathMsg), global::WeChatFerry.Net.PathMsg.Parser, new[]{ "Path", "Receiver" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.XmlMsg), global::WeChatFerry.Net.XmlMsg.Parser, new[]{ "Receiver", "Content", "Path", "Type" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.MsgTypes), global::WeChatFerry.Net.MsgTypes.Parser, new[]{ "Types_" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.RpcContact), global::WeChatFerry.Net.RpcContact.Parser, new[]{ "Wxid", "Code", "Remark", "Name", "Country", "Province", "City", "Gender" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.RpcContacts), global::WeChatFerry.Net.RpcContacts.Parser, new[]{ "Contacts" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbNames), global::WeChatFerry.Net.DbNames.Parser, new[]{ "Names" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbTable), global::WeChatFerry.Net.DbTable.Parser, new[]{ "Name", "Sql" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbTables), global::WeChatFerry.Net.DbTables.Parser, new[]{ "Tables" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbQuery), global::WeChatFerry.Net.DbQuery.Parser, new[]{ "Db", "Sql" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbField), global::WeChatFerry.Net.DbField.Parser, new[]{ "Type", "Column", "Content" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbRow), global::WeChatFerry.Net.DbRow.Parser, new[]{ "Fields" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DbRows), global::WeChatFerry.Net.DbRows.Parser, new[]{ "Rows" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Verification), global::WeChatFerry.Net.Verification.Parser, new[]{ "V3", "V4", "Scene" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.MemberMgmt), global::WeChatFerry.Net.MemberMgmt.Parser, new[]{ "Roomid", "Wxids" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.UserInfo), global::WeChatFerry.Net.UserInfo.Parser, new[]{ "Wxid", "Name", "Mobile", "Home" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.DecPath), global::WeChatFerry.Net.DecPath.Parser, new[]{ "Src", "Dst" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.Transfer), global::WeChatFerry.Net.Transfer.Parser, new[]{ "Wxid", "Tfid", "Taid" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.AttachMsg), global::WeChatFerry.Net.AttachMsg.Parser, new[]{ "Id", "Thumb", "Extra" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.AudioMsg), global::WeChatFerry.Net.AudioMsg.Parser, new[]{ "Id", "Dir" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.RichText), global::WeChatFerry.Net.RichText.Parser, new[]{ "Name", "Account", "Title", "Digest", "Url", "Thumburl", "Receiver" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.PatMsg), global::WeChatFerry.Net.PatMsg.Parser, new[]{ "Roomid", "Wxid" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.OcrMsg), global::WeChatFerry.Net.OcrMsg.Parser, new[]{ "Status", "Result" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.ForwardMsg), global::WeChatFerry.Net.ForwardMsg.Parser, new[]{ "Id", "Receiver" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.RoomData), global::WeChatFerry.Net.RoomData.Parser, new[]{ "Members", "Field2", "Field3", "Field4", "Capacity", "Field6", "Field7", "Field8", "Admins" }, new[]{ "Field2", "Field4", "Field6" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::WeChatFerry.Net.RoomData.Types.RoomMember), global::WeChatFerry.Net.RoomData.Types.RoomMember.Parser, new[]{ "Wxid", "Name", "State" }, new[]{ "Name" }, null, null, null)})
           }));
     }
     #endregion
@@ -194,7 +194,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[0]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -280,10 +280,10 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "func" field.</summary>
     public const int FuncFieldNumber = 1;
-    private global::WeChatFerry.Net.Models.Functions func_ = global::WeChatFerry.Net.Models.Functions.FuncReserved;
+    private global::WeChatFerry.Net.Functions func_ = global::WeChatFerry.Net.Functions.FuncReserved;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.Functions Func {
+    public global::WeChatFerry.Net.Functions Func {
       get { return func_; }
       set {
         func_ = value;
@@ -297,8 +297,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.Empty Empty {
-      get { return msgCase_ == MsgOneofCase.Empty ? (global::WeChatFerry.Net.Models.Empty) msg_ : null; }
+    public global::WeChatFerry.Net.Empty Empty {
+      get { return msgCase_ == MsgOneofCase.Empty ? (global::WeChatFerry.Net.Empty) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Empty;
@@ -341,8 +341,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.TextMsg Txt {
-      get { return msgCase_ == MsgOneofCase.Txt ? (global::WeChatFerry.Net.Models.TextMsg) msg_ : null; }
+    public global::WeChatFerry.Net.TextMsg Txt {
+      get { return msgCase_ == MsgOneofCase.Txt ? (global::WeChatFerry.Net.TextMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Txt;
@@ -356,8 +356,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.PathMsg File {
-      get { return msgCase_ == MsgOneofCase.File ? (global::WeChatFerry.Net.Models.PathMsg) msg_ : null; }
+    public global::WeChatFerry.Net.PathMsg File {
+      get { return msgCase_ == MsgOneofCase.File ? (global::WeChatFerry.Net.PathMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.File;
@@ -371,8 +371,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.DbQuery Query {
-      get { return msgCase_ == MsgOneofCase.Query ? (global::WeChatFerry.Net.Models.DbQuery) msg_ : null; }
+    public global::WeChatFerry.Net.DbQuery Query {
+      get { return msgCase_ == MsgOneofCase.Query ? (global::WeChatFerry.Net.DbQuery) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Query;
@@ -386,8 +386,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.Verification V {
-      get { return msgCase_ == MsgOneofCase.V ? (global::WeChatFerry.Net.Models.Verification) msg_ : null; }
+    public global::WeChatFerry.Net.Verification V {
+      get { return msgCase_ == MsgOneofCase.V ? (global::WeChatFerry.Net.Verification) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.V;
@@ -401,8 +401,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.MemberMgmt M {
-      get { return msgCase_ == MsgOneofCase.M ? (global::WeChatFerry.Net.Models.MemberMgmt) msg_ : null; }
+    public global::WeChatFerry.Net.MemberMgmt M {
+      get { return msgCase_ == MsgOneofCase.M ? (global::WeChatFerry.Net.MemberMgmt) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.M;
@@ -416,8 +416,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.XmlMsg Xml {
-      get { return msgCase_ == MsgOneofCase.Xml ? (global::WeChatFerry.Net.Models.XmlMsg) msg_ : null; }
+    public global::WeChatFerry.Net.XmlMsg Xml {
+      get { return msgCase_ == MsgOneofCase.Xml ? (global::WeChatFerry.Net.XmlMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Xml;
@@ -431,8 +431,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.DecPath Dec {
-      get { return msgCase_ == MsgOneofCase.Dec ? (global::WeChatFerry.Net.Models.DecPath) msg_ : null; }
+    public global::WeChatFerry.Net.DecPath Dec {
+      get { return msgCase_ == MsgOneofCase.Dec ? (global::WeChatFerry.Net.DecPath) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Dec;
@@ -446,8 +446,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.Transfer Tf {
-      get { return msgCase_ == MsgOneofCase.Tf ? (global::WeChatFerry.Net.Models.Transfer) msg_ : null; }
+    public global::WeChatFerry.Net.Transfer Tf {
+      get { return msgCase_ == MsgOneofCase.Tf ? (global::WeChatFerry.Net.Transfer) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Tf;
@@ -519,8 +519,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.AttachMsg Att {
-      get { return msgCase_ == MsgOneofCase.Att ? (global::WeChatFerry.Net.Models.AttachMsg) msg_ : null; }
+    public global::WeChatFerry.Net.AttachMsg Att {
+      get { return msgCase_ == MsgOneofCase.Att ? (global::WeChatFerry.Net.AttachMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Att;
@@ -534,8 +534,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.AudioMsg Am {
-      get { return msgCase_ == MsgOneofCase.Am ? (global::WeChatFerry.Net.Models.AudioMsg) msg_ : null; }
+    public global::WeChatFerry.Net.AudioMsg Am {
+      get { return msgCase_ == MsgOneofCase.Am ? (global::WeChatFerry.Net.AudioMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Am;
@@ -549,8 +549,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.RichText Rt {
-      get { return msgCase_ == MsgOneofCase.Rt ? (global::WeChatFerry.Net.Models.RichText) msg_ : null; }
+    public global::WeChatFerry.Net.RichText Rt {
+      get { return msgCase_ == MsgOneofCase.Rt ? (global::WeChatFerry.Net.RichText) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Rt;
@@ -564,8 +564,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.PatMsg Pm {
-      get { return msgCase_ == MsgOneofCase.Pm ? (global::WeChatFerry.Net.Models.PatMsg) msg_ : null; }
+    public global::WeChatFerry.Net.PatMsg Pm {
+      get { return msgCase_ == MsgOneofCase.Pm ? (global::WeChatFerry.Net.PatMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Pm;
@@ -579,8 +579,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.ForwardMsg Fm {
-      get { return msgCase_ == MsgOneofCase.Fm ? (global::WeChatFerry.Net.Models.ForwardMsg) msg_ : null; }
+    public global::WeChatFerry.Net.ForwardMsg Fm {
+      get { return msgCase_ == MsgOneofCase.Fm ? (global::WeChatFerry.Net.ForwardMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Fm;
@@ -664,7 +664,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) hash ^= Func.GetHashCode();
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) hash ^= Func.GetHashCode();
       if (msgCase_ == MsgOneofCase.Empty) hash ^= Empty.GetHashCode();
       if (HasStr) hash ^= Str.GetHashCode();
       if (msgCase_ == MsgOneofCase.Txt) hash ^= Txt.GetHashCode();
@@ -701,7 +701,7 @@ namespace WeChatFerry.Net.Models {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Func);
       }
@@ -783,7 +783,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Func);
       }
@@ -865,7 +865,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Func);
       }
       if (msgCase_ == MsgOneofCase.Empty) {
@@ -931,13 +931,13 @@ namespace WeChatFerry.Net.Models {
       if (other == null) {
         return;
       }
-      if (other.Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (other.Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         Func = other.Func;
       }
       switch (other.MsgCase) {
         case MsgOneofCase.Empty:
           if (Empty == null) {
-            Empty = new global::WeChatFerry.Net.Models.Empty();
+            Empty = new global::WeChatFerry.Net.Empty();
           }
           Empty.MergeFrom(other.Empty);
           break;
@@ -946,49 +946,49 @@ namespace WeChatFerry.Net.Models {
           break;
         case MsgOneofCase.Txt:
           if (Txt == null) {
-            Txt = new global::WeChatFerry.Net.Models.TextMsg();
+            Txt = new global::WeChatFerry.Net.TextMsg();
           }
           Txt.MergeFrom(other.Txt);
           break;
         case MsgOneofCase.File:
           if (File == null) {
-            File = new global::WeChatFerry.Net.Models.PathMsg();
+            File = new global::WeChatFerry.Net.PathMsg();
           }
           File.MergeFrom(other.File);
           break;
         case MsgOneofCase.Query:
           if (Query == null) {
-            Query = new global::WeChatFerry.Net.Models.DbQuery();
+            Query = new global::WeChatFerry.Net.DbQuery();
           }
           Query.MergeFrom(other.Query);
           break;
         case MsgOneofCase.V:
           if (V == null) {
-            V = new global::WeChatFerry.Net.Models.Verification();
+            V = new global::WeChatFerry.Net.Verification();
           }
           V.MergeFrom(other.V);
           break;
         case MsgOneofCase.M:
           if (M == null) {
-            M = new global::WeChatFerry.Net.Models.MemberMgmt();
+            M = new global::WeChatFerry.Net.MemberMgmt();
           }
           M.MergeFrom(other.M);
           break;
         case MsgOneofCase.Xml:
           if (Xml == null) {
-            Xml = new global::WeChatFerry.Net.Models.XmlMsg();
+            Xml = new global::WeChatFerry.Net.XmlMsg();
           }
           Xml.MergeFrom(other.Xml);
           break;
         case MsgOneofCase.Dec:
           if (Dec == null) {
-            Dec = new global::WeChatFerry.Net.Models.DecPath();
+            Dec = new global::WeChatFerry.Net.DecPath();
           }
           Dec.MergeFrom(other.Dec);
           break;
         case MsgOneofCase.Tf:
           if (Tf == null) {
-            Tf = new global::WeChatFerry.Net.Models.Transfer();
+            Tf = new global::WeChatFerry.Net.Transfer();
           }
           Tf.MergeFrom(other.Tf);
           break;
@@ -1000,31 +1000,31 @@ namespace WeChatFerry.Net.Models {
           break;
         case MsgOneofCase.Att:
           if (Att == null) {
-            Att = new global::WeChatFerry.Net.Models.AttachMsg();
+            Att = new global::WeChatFerry.Net.AttachMsg();
           }
           Att.MergeFrom(other.Att);
           break;
         case MsgOneofCase.Am:
           if (Am == null) {
-            Am = new global::WeChatFerry.Net.Models.AudioMsg();
+            Am = new global::WeChatFerry.Net.AudioMsg();
           }
           Am.MergeFrom(other.Am);
           break;
         case MsgOneofCase.Rt:
           if (Rt == null) {
-            Rt = new global::WeChatFerry.Net.Models.RichText();
+            Rt = new global::WeChatFerry.Net.RichText();
           }
           Rt.MergeFrom(other.Rt);
           break;
         case MsgOneofCase.Pm:
           if (Pm == null) {
-            Pm = new global::WeChatFerry.Net.Models.PatMsg();
+            Pm = new global::WeChatFerry.Net.PatMsg();
           }
           Pm.MergeFrom(other.Pm);
           break;
         case MsgOneofCase.Fm:
           if (Fm == null) {
-            Fm = new global::WeChatFerry.Net.Models.ForwardMsg();
+            Fm = new global::WeChatFerry.Net.ForwardMsg();
           }
           Fm.MergeFrom(other.Fm);
           break;
@@ -1046,11 +1046,11 @@ namespace WeChatFerry.Net.Models {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Func = (global::WeChatFerry.Net.Models.Functions) input.ReadEnum();
+            Func = (global::WeChatFerry.Net.Functions) input.ReadEnum();
             break;
           }
           case 18: {
-            global::WeChatFerry.Net.Models.Empty subBuilder = new global::WeChatFerry.Net.Models.Empty();
+            global::WeChatFerry.Net.Empty subBuilder = new global::WeChatFerry.Net.Empty();
             if (msgCase_ == MsgOneofCase.Empty) {
               subBuilder.MergeFrom(Empty);
             }
@@ -1063,7 +1063,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 34: {
-            global::WeChatFerry.Net.Models.TextMsg subBuilder = new global::WeChatFerry.Net.Models.TextMsg();
+            global::WeChatFerry.Net.TextMsg subBuilder = new global::WeChatFerry.Net.TextMsg();
             if (msgCase_ == MsgOneofCase.Txt) {
               subBuilder.MergeFrom(Txt);
             }
@@ -1072,7 +1072,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 42: {
-            global::WeChatFerry.Net.Models.PathMsg subBuilder = new global::WeChatFerry.Net.Models.PathMsg();
+            global::WeChatFerry.Net.PathMsg subBuilder = new global::WeChatFerry.Net.PathMsg();
             if (msgCase_ == MsgOneofCase.File) {
               subBuilder.MergeFrom(File);
             }
@@ -1081,7 +1081,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 50: {
-            global::WeChatFerry.Net.Models.DbQuery subBuilder = new global::WeChatFerry.Net.Models.DbQuery();
+            global::WeChatFerry.Net.DbQuery subBuilder = new global::WeChatFerry.Net.DbQuery();
             if (msgCase_ == MsgOneofCase.Query) {
               subBuilder.MergeFrom(Query);
             }
@@ -1090,7 +1090,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 58: {
-            global::WeChatFerry.Net.Models.Verification subBuilder = new global::WeChatFerry.Net.Models.Verification();
+            global::WeChatFerry.Net.Verification subBuilder = new global::WeChatFerry.Net.Verification();
             if (msgCase_ == MsgOneofCase.V) {
               subBuilder.MergeFrom(V);
             }
@@ -1099,7 +1099,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 66: {
-            global::WeChatFerry.Net.Models.MemberMgmt subBuilder = new global::WeChatFerry.Net.Models.MemberMgmt();
+            global::WeChatFerry.Net.MemberMgmt subBuilder = new global::WeChatFerry.Net.MemberMgmt();
             if (msgCase_ == MsgOneofCase.M) {
               subBuilder.MergeFrom(M);
             }
@@ -1108,7 +1108,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 74: {
-            global::WeChatFerry.Net.Models.XmlMsg subBuilder = new global::WeChatFerry.Net.Models.XmlMsg();
+            global::WeChatFerry.Net.XmlMsg subBuilder = new global::WeChatFerry.Net.XmlMsg();
             if (msgCase_ == MsgOneofCase.Xml) {
               subBuilder.MergeFrom(Xml);
             }
@@ -1117,7 +1117,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 82: {
-            global::WeChatFerry.Net.Models.DecPath subBuilder = new global::WeChatFerry.Net.Models.DecPath();
+            global::WeChatFerry.Net.DecPath subBuilder = new global::WeChatFerry.Net.DecPath();
             if (msgCase_ == MsgOneofCase.Dec) {
               subBuilder.MergeFrom(Dec);
             }
@@ -1126,7 +1126,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 90: {
-            global::WeChatFerry.Net.Models.Transfer subBuilder = new global::WeChatFerry.Net.Models.Transfer();
+            global::WeChatFerry.Net.Transfer subBuilder = new global::WeChatFerry.Net.Transfer();
             if (msgCase_ == MsgOneofCase.Tf) {
               subBuilder.MergeFrom(Tf);
             }
@@ -1143,7 +1143,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 114: {
-            global::WeChatFerry.Net.Models.AttachMsg subBuilder = new global::WeChatFerry.Net.Models.AttachMsg();
+            global::WeChatFerry.Net.AttachMsg subBuilder = new global::WeChatFerry.Net.AttachMsg();
             if (msgCase_ == MsgOneofCase.Att) {
               subBuilder.MergeFrom(Att);
             }
@@ -1152,7 +1152,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 122: {
-            global::WeChatFerry.Net.Models.AudioMsg subBuilder = new global::WeChatFerry.Net.Models.AudioMsg();
+            global::WeChatFerry.Net.AudioMsg subBuilder = new global::WeChatFerry.Net.AudioMsg();
             if (msgCase_ == MsgOneofCase.Am) {
               subBuilder.MergeFrom(Am);
             }
@@ -1161,7 +1161,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 130: {
-            global::WeChatFerry.Net.Models.RichText subBuilder = new global::WeChatFerry.Net.Models.RichText();
+            global::WeChatFerry.Net.RichText subBuilder = new global::WeChatFerry.Net.RichText();
             if (msgCase_ == MsgOneofCase.Rt) {
               subBuilder.MergeFrom(Rt);
             }
@@ -1170,7 +1170,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 138: {
-            global::WeChatFerry.Net.Models.PatMsg subBuilder = new global::WeChatFerry.Net.Models.PatMsg();
+            global::WeChatFerry.Net.PatMsg subBuilder = new global::WeChatFerry.Net.PatMsg();
             if (msgCase_ == MsgOneofCase.Pm) {
               subBuilder.MergeFrom(Pm);
             }
@@ -1179,7 +1179,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 146: {
-            global::WeChatFerry.Net.Models.ForwardMsg subBuilder = new global::WeChatFerry.Net.Models.ForwardMsg();
+            global::WeChatFerry.Net.ForwardMsg subBuilder = new global::WeChatFerry.Net.ForwardMsg();
             if (msgCase_ == MsgOneofCase.Fm) {
               subBuilder.MergeFrom(Fm);
             }
@@ -1203,11 +1203,11 @@ namespace WeChatFerry.Net.Models {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Func = (global::WeChatFerry.Net.Models.Functions) input.ReadEnum();
+            Func = (global::WeChatFerry.Net.Functions) input.ReadEnum();
             break;
           }
           case 18: {
-            global::WeChatFerry.Net.Models.Empty subBuilder = new global::WeChatFerry.Net.Models.Empty();
+            global::WeChatFerry.Net.Empty subBuilder = new global::WeChatFerry.Net.Empty();
             if (msgCase_ == MsgOneofCase.Empty) {
               subBuilder.MergeFrom(Empty);
             }
@@ -1220,7 +1220,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 34: {
-            global::WeChatFerry.Net.Models.TextMsg subBuilder = new global::WeChatFerry.Net.Models.TextMsg();
+            global::WeChatFerry.Net.TextMsg subBuilder = new global::WeChatFerry.Net.TextMsg();
             if (msgCase_ == MsgOneofCase.Txt) {
               subBuilder.MergeFrom(Txt);
             }
@@ -1229,7 +1229,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 42: {
-            global::WeChatFerry.Net.Models.PathMsg subBuilder = new global::WeChatFerry.Net.Models.PathMsg();
+            global::WeChatFerry.Net.PathMsg subBuilder = new global::WeChatFerry.Net.PathMsg();
             if (msgCase_ == MsgOneofCase.File) {
               subBuilder.MergeFrom(File);
             }
@@ -1238,7 +1238,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 50: {
-            global::WeChatFerry.Net.Models.DbQuery subBuilder = new global::WeChatFerry.Net.Models.DbQuery();
+            global::WeChatFerry.Net.DbQuery subBuilder = new global::WeChatFerry.Net.DbQuery();
             if (msgCase_ == MsgOneofCase.Query) {
               subBuilder.MergeFrom(Query);
             }
@@ -1247,7 +1247,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 58: {
-            global::WeChatFerry.Net.Models.Verification subBuilder = new global::WeChatFerry.Net.Models.Verification();
+            global::WeChatFerry.Net.Verification subBuilder = new global::WeChatFerry.Net.Verification();
             if (msgCase_ == MsgOneofCase.V) {
               subBuilder.MergeFrom(V);
             }
@@ -1256,7 +1256,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 66: {
-            global::WeChatFerry.Net.Models.MemberMgmt subBuilder = new global::WeChatFerry.Net.Models.MemberMgmt();
+            global::WeChatFerry.Net.MemberMgmt subBuilder = new global::WeChatFerry.Net.MemberMgmt();
             if (msgCase_ == MsgOneofCase.M) {
               subBuilder.MergeFrom(M);
             }
@@ -1265,7 +1265,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 74: {
-            global::WeChatFerry.Net.Models.XmlMsg subBuilder = new global::WeChatFerry.Net.Models.XmlMsg();
+            global::WeChatFerry.Net.XmlMsg subBuilder = new global::WeChatFerry.Net.XmlMsg();
             if (msgCase_ == MsgOneofCase.Xml) {
               subBuilder.MergeFrom(Xml);
             }
@@ -1274,7 +1274,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 82: {
-            global::WeChatFerry.Net.Models.DecPath subBuilder = new global::WeChatFerry.Net.Models.DecPath();
+            global::WeChatFerry.Net.DecPath subBuilder = new global::WeChatFerry.Net.DecPath();
             if (msgCase_ == MsgOneofCase.Dec) {
               subBuilder.MergeFrom(Dec);
             }
@@ -1283,7 +1283,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 90: {
-            global::WeChatFerry.Net.Models.Transfer subBuilder = new global::WeChatFerry.Net.Models.Transfer();
+            global::WeChatFerry.Net.Transfer subBuilder = new global::WeChatFerry.Net.Transfer();
             if (msgCase_ == MsgOneofCase.Tf) {
               subBuilder.MergeFrom(Tf);
             }
@@ -1300,7 +1300,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 114: {
-            global::WeChatFerry.Net.Models.AttachMsg subBuilder = new global::WeChatFerry.Net.Models.AttachMsg();
+            global::WeChatFerry.Net.AttachMsg subBuilder = new global::WeChatFerry.Net.AttachMsg();
             if (msgCase_ == MsgOneofCase.Att) {
               subBuilder.MergeFrom(Att);
             }
@@ -1309,7 +1309,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 122: {
-            global::WeChatFerry.Net.Models.AudioMsg subBuilder = new global::WeChatFerry.Net.Models.AudioMsg();
+            global::WeChatFerry.Net.AudioMsg subBuilder = new global::WeChatFerry.Net.AudioMsg();
             if (msgCase_ == MsgOneofCase.Am) {
               subBuilder.MergeFrom(Am);
             }
@@ -1318,7 +1318,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 130: {
-            global::WeChatFerry.Net.Models.RichText subBuilder = new global::WeChatFerry.Net.Models.RichText();
+            global::WeChatFerry.Net.RichText subBuilder = new global::WeChatFerry.Net.RichText();
             if (msgCase_ == MsgOneofCase.Rt) {
               subBuilder.MergeFrom(Rt);
             }
@@ -1327,7 +1327,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 138: {
-            global::WeChatFerry.Net.Models.PatMsg subBuilder = new global::WeChatFerry.Net.Models.PatMsg();
+            global::WeChatFerry.Net.PatMsg subBuilder = new global::WeChatFerry.Net.PatMsg();
             if (msgCase_ == MsgOneofCase.Pm) {
               subBuilder.MergeFrom(Pm);
             }
@@ -1336,7 +1336,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 146: {
-            global::WeChatFerry.Net.Models.ForwardMsg subBuilder = new global::WeChatFerry.Net.Models.ForwardMsg();
+            global::WeChatFerry.Net.ForwardMsg subBuilder = new global::WeChatFerry.Net.ForwardMsg();
             if (msgCase_ == MsgOneofCase.Fm) {
               subBuilder.MergeFrom(Fm);
             }
@@ -1366,7 +1366,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[1]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1431,10 +1431,10 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "func" field.</summary>
     public const int FuncFieldNumber = 1;
-    private global::WeChatFerry.Net.Models.Functions func_ = global::WeChatFerry.Net.Models.Functions.FuncReserved;
+    private global::WeChatFerry.Net.Functions func_ = global::WeChatFerry.Net.Functions.FuncReserved;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.Functions Func {
+    public global::WeChatFerry.Net.Functions Func {
       get { return func_; }
       set {
         func_ = value;
@@ -1506,8 +1506,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.WxMsg Wxmsg {
-      get { return msgCase_ == MsgOneofCase.Wxmsg ? (global::WeChatFerry.Net.Models.WxMsg) msg_ : null; }
+    public global::WeChatFerry.Net.WxMsg Wxmsg {
+      get { return msgCase_ == MsgOneofCase.Wxmsg ? (global::WeChatFerry.Net.WxMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Wxmsg;
@@ -1521,8 +1521,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.MsgTypes Types_ {
-      get { return msgCase_ == MsgOneofCase.Types_ ? (global::WeChatFerry.Net.Models.MsgTypes) msg_ : null; }
+    public global::WeChatFerry.Net.MsgTypes Types_ {
+      get { return msgCase_ == MsgOneofCase.Types_ ? (global::WeChatFerry.Net.MsgTypes) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Types_;
@@ -1536,8 +1536,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.RpcContacts Contacts {
-      get { return msgCase_ == MsgOneofCase.Contacts ? (global::WeChatFerry.Net.Models.RpcContacts) msg_ : null; }
+    public global::WeChatFerry.Net.RpcContacts Contacts {
+      get { return msgCase_ == MsgOneofCase.Contacts ? (global::WeChatFerry.Net.RpcContacts) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Contacts;
@@ -1551,8 +1551,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.DbNames Dbs {
-      get { return msgCase_ == MsgOneofCase.Dbs ? (global::WeChatFerry.Net.Models.DbNames) msg_ : null; }
+    public global::WeChatFerry.Net.DbNames Dbs {
+      get { return msgCase_ == MsgOneofCase.Dbs ? (global::WeChatFerry.Net.DbNames) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Dbs;
@@ -1566,8 +1566,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.DbTables Tables {
-      get { return msgCase_ == MsgOneofCase.Tables ? (global::WeChatFerry.Net.Models.DbTables) msg_ : null; }
+    public global::WeChatFerry.Net.DbTables Tables {
+      get { return msgCase_ == MsgOneofCase.Tables ? (global::WeChatFerry.Net.DbTables) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Tables;
@@ -1581,8 +1581,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.DbRows Rows {
-      get { return msgCase_ == MsgOneofCase.Rows ? (global::WeChatFerry.Net.Models.DbRows) msg_ : null; }
+    public global::WeChatFerry.Net.DbRows Rows {
+      get { return msgCase_ == MsgOneofCase.Rows ? (global::WeChatFerry.Net.DbRows) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Rows;
@@ -1596,8 +1596,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.UserInfo Ui {
-      get { return msgCase_ == MsgOneofCase.Ui ? (global::WeChatFerry.Net.Models.UserInfo) msg_ : null; }
+    public global::WeChatFerry.Net.UserInfo Ui {
+      get { return msgCase_ == MsgOneofCase.Ui ? (global::WeChatFerry.Net.UserInfo) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Ui;
@@ -1611,8 +1611,8 @@ namespace WeChatFerry.Net.Models {
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::WeChatFerry.Net.Models.OcrMsg Ocr {
-      get { return msgCase_ == MsgOneofCase.Ocr ? (global::WeChatFerry.Net.Models.OcrMsg) msg_ : null; }
+    public global::WeChatFerry.Net.OcrMsg Ocr {
+      get { return msgCase_ == MsgOneofCase.Ocr ? (global::WeChatFerry.Net.OcrMsg) msg_ : null; }
       set {
         msg_ = value;
         msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Ocr;
@@ -1682,7 +1682,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) hash ^= Func.GetHashCode();
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) hash ^= Func.GetHashCode();
       if (HasStatus) hash ^= Status.GetHashCode();
       if (HasStr) hash ^= Str.GetHashCode();
       if (msgCase_ == MsgOneofCase.Wxmsg) hash ^= Wxmsg.GetHashCode();
@@ -1712,7 +1712,7 @@ namespace WeChatFerry.Net.Models {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Func);
       }
@@ -1766,7 +1766,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Func);
       }
@@ -1820,7 +1820,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Func);
       }
       if (HasStatus) {
@@ -1865,7 +1865,7 @@ namespace WeChatFerry.Net.Models {
       if (other == null) {
         return;
       }
-      if (other.Func != global::WeChatFerry.Net.Models.Functions.FuncReserved) {
+      if (other.Func != global::WeChatFerry.Net.Functions.FuncReserved) {
         Func = other.Func;
       }
       switch (other.MsgCase) {
@@ -1877,49 +1877,49 @@ namespace WeChatFerry.Net.Models {
           break;
         case MsgOneofCase.Wxmsg:
           if (Wxmsg == null) {
-            Wxmsg = new global::WeChatFerry.Net.Models.WxMsg();
+            Wxmsg = new global::WeChatFerry.Net.WxMsg();
           }
           Wxmsg.MergeFrom(other.Wxmsg);
           break;
         case MsgOneofCase.Types_:
           if (Types_ == null) {
-            Types_ = new global::WeChatFerry.Net.Models.MsgTypes();
+            Types_ = new global::WeChatFerry.Net.MsgTypes();
           }
           Types_.MergeFrom(other.Types_);
           break;
         case MsgOneofCase.Contacts:
           if (Contacts == null) {
-            Contacts = new global::WeChatFerry.Net.Models.RpcContacts();
+            Contacts = new global::WeChatFerry.Net.RpcContacts();
           }
           Contacts.MergeFrom(other.Contacts);
           break;
         case MsgOneofCase.Dbs:
           if (Dbs == null) {
-            Dbs = new global::WeChatFerry.Net.Models.DbNames();
+            Dbs = new global::WeChatFerry.Net.DbNames();
           }
           Dbs.MergeFrom(other.Dbs);
           break;
         case MsgOneofCase.Tables:
           if (Tables == null) {
-            Tables = new global::WeChatFerry.Net.Models.DbTables();
+            Tables = new global::WeChatFerry.Net.DbTables();
           }
           Tables.MergeFrom(other.Tables);
           break;
         case MsgOneofCase.Rows:
           if (Rows == null) {
-            Rows = new global::WeChatFerry.Net.Models.DbRows();
+            Rows = new global::WeChatFerry.Net.DbRows();
           }
           Rows.MergeFrom(other.Rows);
           break;
         case MsgOneofCase.Ui:
           if (Ui == null) {
-            Ui = new global::WeChatFerry.Net.Models.UserInfo();
+            Ui = new global::WeChatFerry.Net.UserInfo();
           }
           Ui.MergeFrom(other.Ui);
           break;
         case MsgOneofCase.Ocr:
           if (Ocr == null) {
-            Ocr = new global::WeChatFerry.Net.Models.OcrMsg();
+            Ocr = new global::WeChatFerry.Net.OcrMsg();
           }
           Ocr.MergeFrom(other.Ocr);
           break;
@@ -1941,7 +1941,7 @@ namespace WeChatFerry.Net.Models {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Func = (global::WeChatFerry.Net.Models.Functions) input.ReadEnum();
+            Func = (global::WeChatFerry.Net.Functions) input.ReadEnum();
             break;
           }
           case 16: {
@@ -1953,7 +1953,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 34: {
-            global::WeChatFerry.Net.Models.WxMsg subBuilder = new global::WeChatFerry.Net.Models.WxMsg();
+            global::WeChatFerry.Net.WxMsg subBuilder = new global::WeChatFerry.Net.WxMsg();
             if (msgCase_ == MsgOneofCase.Wxmsg) {
               subBuilder.MergeFrom(Wxmsg);
             }
@@ -1962,7 +1962,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 42: {
-            global::WeChatFerry.Net.Models.MsgTypes subBuilder = new global::WeChatFerry.Net.Models.MsgTypes();
+            global::WeChatFerry.Net.MsgTypes subBuilder = new global::WeChatFerry.Net.MsgTypes();
             if (msgCase_ == MsgOneofCase.Types_) {
               subBuilder.MergeFrom(Types_);
             }
@@ -1971,7 +1971,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 50: {
-            global::WeChatFerry.Net.Models.RpcContacts subBuilder = new global::WeChatFerry.Net.Models.RpcContacts();
+            global::WeChatFerry.Net.RpcContacts subBuilder = new global::WeChatFerry.Net.RpcContacts();
             if (msgCase_ == MsgOneofCase.Contacts) {
               subBuilder.MergeFrom(Contacts);
             }
@@ -1980,7 +1980,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 58: {
-            global::WeChatFerry.Net.Models.DbNames subBuilder = new global::WeChatFerry.Net.Models.DbNames();
+            global::WeChatFerry.Net.DbNames subBuilder = new global::WeChatFerry.Net.DbNames();
             if (msgCase_ == MsgOneofCase.Dbs) {
               subBuilder.MergeFrom(Dbs);
             }
@@ -1989,7 +1989,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 66: {
-            global::WeChatFerry.Net.Models.DbTables subBuilder = new global::WeChatFerry.Net.Models.DbTables();
+            global::WeChatFerry.Net.DbTables subBuilder = new global::WeChatFerry.Net.DbTables();
             if (msgCase_ == MsgOneofCase.Tables) {
               subBuilder.MergeFrom(Tables);
             }
@@ -1998,7 +1998,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 74: {
-            global::WeChatFerry.Net.Models.DbRows subBuilder = new global::WeChatFerry.Net.Models.DbRows();
+            global::WeChatFerry.Net.DbRows subBuilder = new global::WeChatFerry.Net.DbRows();
             if (msgCase_ == MsgOneofCase.Rows) {
               subBuilder.MergeFrom(Rows);
             }
@@ -2007,7 +2007,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 82: {
-            global::WeChatFerry.Net.Models.UserInfo subBuilder = new global::WeChatFerry.Net.Models.UserInfo();
+            global::WeChatFerry.Net.UserInfo subBuilder = new global::WeChatFerry.Net.UserInfo();
             if (msgCase_ == MsgOneofCase.Ui) {
               subBuilder.MergeFrom(Ui);
             }
@@ -2016,7 +2016,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 90: {
-            global::WeChatFerry.Net.Models.OcrMsg subBuilder = new global::WeChatFerry.Net.Models.OcrMsg();
+            global::WeChatFerry.Net.OcrMsg subBuilder = new global::WeChatFerry.Net.OcrMsg();
             if (msgCase_ == MsgOneofCase.Ocr) {
               subBuilder.MergeFrom(Ocr);
             }
@@ -2040,7 +2040,7 @@ namespace WeChatFerry.Net.Models {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Func = (global::WeChatFerry.Net.Models.Functions) input.ReadEnum();
+            Func = (global::WeChatFerry.Net.Functions) input.ReadEnum();
             break;
           }
           case 16: {
@@ -2052,7 +2052,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 34: {
-            global::WeChatFerry.Net.Models.WxMsg subBuilder = new global::WeChatFerry.Net.Models.WxMsg();
+            global::WeChatFerry.Net.WxMsg subBuilder = new global::WeChatFerry.Net.WxMsg();
             if (msgCase_ == MsgOneofCase.Wxmsg) {
               subBuilder.MergeFrom(Wxmsg);
             }
@@ -2061,7 +2061,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 42: {
-            global::WeChatFerry.Net.Models.MsgTypes subBuilder = new global::WeChatFerry.Net.Models.MsgTypes();
+            global::WeChatFerry.Net.MsgTypes subBuilder = new global::WeChatFerry.Net.MsgTypes();
             if (msgCase_ == MsgOneofCase.Types_) {
               subBuilder.MergeFrom(Types_);
             }
@@ -2070,7 +2070,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 50: {
-            global::WeChatFerry.Net.Models.RpcContacts subBuilder = new global::WeChatFerry.Net.Models.RpcContacts();
+            global::WeChatFerry.Net.RpcContacts subBuilder = new global::WeChatFerry.Net.RpcContacts();
             if (msgCase_ == MsgOneofCase.Contacts) {
               subBuilder.MergeFrom(Contacts);
             }
@@ -2079,7 +2079,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 58: {
-            global::WeChatFerry.Net.Models.DbNames subBuilder = new global::WeChatFerry.Net.Models.DbNames();
+            global::WeChatFerry.Net.DbNames subBuilder = new global::WeChatFerry.Net.DbNames();
             if (msgCase_ == MsgOneofCase.Dbs) {
               subBuilder.MergeFrom(Dbs);
             }
@@ -2088,7 +2088,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 66: {
-            global::WeChatFerry.Net.Models.DbTables subBuilder = new global::WeChatFerry.Net.Models.DbTables();
+            global::WeChatFerry.Net.DbTables subBuilder = new global::WeChatFerry.Net.DbTables();
             if (msgCase_ == MsgOneofCase.Tables) {
               subBuilder.MergeFrom(Tables);
             }
@@ -2097,7 +2097,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 74: {
-            global::WeChatFerry.Net.Models.DbRows subBuilder = new global::WeChatFerry.Net.Models.DbRows();
+            global::WeChatFerry.Net.DbRows subBuilder = new global::WeChatFerry.Net.DbRows();
             if (msgCase_ == MsgOneofCase.Rows) {
               subBuilder.MergeFrom(Rows);
             }
@@ -2106,7 +2106,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 82: {
-            global::WeChatFerry.Net.Models.UserInfo subBuilder = new global::WeChatFerry.Net.Models.UserInfo();
+            global::WeChatFerry.Net.UserInfo subBuilder = new global::WeChatFerry.Net.UserInfo();
             if (msgCase_ == MsgOneofCase.Ui) {
               subBuilder.MergeFrom(Ui);
             }
@@ -2115,7 +2115,7 @@ namespace WeChatFerry.Net.Models {
             break;
           }
           case 90: {
-            global::WeChatFerry.Net.Models.OcrMsg subBuilder = new global::WeChatFerry.Net.Models.OcrMsg();
+            global::WeChatFerry.Net.OcrMsg subBuilder = new global::WeChatFerry.Net.OcrMsg();
             if (msgCase_ == MsgOneofCase.Ocr) {
               subBuilder.MergeFrom(Ocr);
             }
@@ -2145,7 +2145,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[2]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2298,7 +2298,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[3]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2931,7 +2931,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[4]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3204,7 +3204,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[5]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3437,7 +3437,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[6]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3750,7 +3750,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[7]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3929,7 +3929,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[8]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4402,7 +4402,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[9]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4434,12 +4434,12 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "contacts" field.</summary>
     public const int ContactsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::WeChatFerry.Net.Models.RpcContact> _repeated_contacts_codec
-        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.Models.RpcContact.Parser);
-    private readonly pbc::RepeatedField<global::WeChatFerry.Net.Models.RpcContact> contacts_ = new pbc::RepeatedField<global::WeChatFerry.Net.Models.RpcContact>();
+    private static readonly pb::FieldCodec<global::WeChatFerry.Net.RpcContact> _repeated_contacts_codec
+        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.RpcContact.Parser);
+    private readonly pbc::RepeatedField<global::WeChatFerry.Net.RpcContact> contacts_ = new pbc::RepeatedField<global::WeChatFerry.Net.RpcContact>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::WeChatFerry.Net.Models.RpcContact> Contacts {
+    public pbc::RepeatedField<global::WeChatFerry.Net.RpcContact> Contacts {
       get { return contacts_; }
     }
 
@@ -4581,7 +4581,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[10]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4760,7 +4760,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[11]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4993,7 +4993,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[12]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5025,12 +5025,12 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "tables" field.</summary>
     public const int TablesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::WeChatFerry.Net.Models.DbTable> _repeated_tables_codec
-        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.Models.DbTable.Parser);
-    private readonly pbc::RepeatedField<global::WeChatFerry.Net.Models.DbTable> tables_ = new pbc::RepeatedField<global::WeChatFerry.Net.Models.DbTable>();
+    private static readonly pb::FieldCodec<global::WeChatFerry.Net.DbTable> _repeated_tables_codec
+        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.DbTable.Parser);
+    private readonly pbc::RepeatedField<global::WeChatFerry.Net.DbTable> tables_ = new pbc::RepeatedField<global::WeChatFerry.Net.DbTable>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::WeChatFerry.Net.Models.DbTable> Tables {
+    public pbc::RepeatedField<global::WeChatFerry.Net.DbTable> Tables {
       get { return tables_; }
     }
 
@@ -5172,7 +5172,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[13]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5405,7 +5405,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[14]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5678,7 +5678,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[15]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5710,12 +5710,12 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "fields" field.</summary>
     public const int FieldsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::WeChatFerry.Net.Models.DbField> _repeated_fields_codec
-        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.Models.DbField.Parser);
-    private readonly pbc::RepeatedField<global::WeChatFerry.Net.Models.DbField> fields_ = new pbc::RepeatedField<global::WeChatFerry.Net.Models.DbField>();
+    private static readonly pb::FieldCodec<global::WeChatFerry.Net.DbField> _repeated_fields_codec
+        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.DbField.Parser);
+    private readonly pbc::RepeatedField<global::WeChatFerry.Net.DbField> fields_ = new pbc::RepeatedField<global::WeChatFerry.Net.DbField>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::WeChatFerry.Net.Models.DbField> Fields {
+    public pbc::RepeatedField<global::WeChatFerry.Net.DbField> Fields {
       get { return fields_; }
     }
 
@@ -5857,7 +5857,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[16]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5889,12 +5889,12 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "rows" field.</summary>
     public const int RowsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::WeChatFerry.Net.Models.DbRow> _repeated_rows_codec
-        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.Models.DbRow.Parser);
-    private readonly pbc::RepeatedField<global::WeChatFerry.Net.Models.DbRow> rows_ = new pbc::RepeatedField<global::WeChatFerry.Net.Models.DbRow>();
+    private static readonly pb::FieldCodec<global::WeChatFerry.Net.DbRow> _repeated_rows_codec
+        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.DbRow.Parser);
+    private readonly pbc::RepeatedField<global::WeChatFerry.Net.DbRow> rows_ = new pbc::RepeatedField<global::WeChatFerry.Net.DbRow>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::WeChatFerry.Net.Models.DbRow> Rows {
+    public pbc::RepeatedField<global::WeChatFerry.Net.DbRow> Rows {
       get { return rows_; }
     }
 
@@ -6036,7 +6036,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[17]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6309,7 +6309,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[18]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6542,7 +6542,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[19]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6855,7 +6855,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[20]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7088,7 +7088,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[21]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7361,7 +7361,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[22]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7634,7 +7634,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[23]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7867,7 +7867,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[24]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8300,7 +8300,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[25]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8533,7 +8533,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[26]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8766,7 +8766,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[27]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9000,7 +9000,7 @@ namespace WeChatFerry.Net.Models {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::WeChatFerry.Net.Models.WCFReflection.Descriptor.MessageTypes[28]; }
+      get { return global::WeChatFerry.Net.WCFReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9041,12 +9041,12 @@ namespace WeChatFerry.Net.Models {
 
     /// <summary>Field number for the "members" field.</summary>
     public const int MembersFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::WeChatFerry.Net.Models.RoomData.Types.RoomMember> _repeated_members_codec
-        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.Models.RoomData.Types.RoomMember.Parser);
-    private readonly pbc::RepeatedField<global::WeChatFerry.Net.Models.RoomData.Types.RoomMember> members_ = new pbc::RepeatedField<global::WeChatFerry.Net.Models.RoomData.Types.RoomMember>();
+    private static readonly pb::FieldCodec<global::WeChatFerry.Net.RoomData.Types.RoomMember> _repeated_members_codec
+        = pb::FieldCodec.ForMessage(10, global::WeChatFerry.Net.RoomData.Types.RoomMember.Parser);
+    private readonly pbc::RepeatedField<global::WeChatFerry.Net.RoomData.Types.RoomMember> members_ = new pbc::RepeatedField<global::WeChatFerry.Net.RoomData.Types.RoomMember>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::WeChatFerry.Net.Models.RoomData.Types.RoomMember> Members {
+    public pbc::RepeatedField<global::WeChatFerry.Net.RoomData.Types.RoomMember> Members {
       get { return members_; }
     }
 
@@ -9515,7 +9515,7 @@ namespace WeChatFerry.Net.Models {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::WeChatFerry.Net.Models.RoomData.Descriptor.NestedTypes[0]; }
+          get { return global::WeChatFerry.Net.RoomData.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
