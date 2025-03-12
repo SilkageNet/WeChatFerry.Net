@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace WeChatFerry.Net
 {
@@ -30,7 +31,16 @@ namespace WeChatFerry.Net
 
         public WCFSDK(string sdkPath)
         {
-            if (!File.Exists(sdkPath)) throw new FileNotFoundException("SDK path not found", sdkPath);
+            if (string.IsNullOrEmpty(sdkPath) || !File.Exists(sdkPath))
+            {
+                var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+                var wcfDir = Path.Combine(dir, "wcf");
+                if (!Directory.Exists(wcfDir)) throw new Exception("WCF directory not found");
+                var maxVersionDir = Directory.GetDirectories(wcfDir).OrderByDescending(x => new Version(Path.GetFileName(x).TrimStart('v'))).FirstOrDefault();
+                if (maxVersionDir == null) throw new Exception("WCF version not found");
+                sdkPath = Path.Combine(maxVersionDir, "sdk.dll");
+                if (!File.Exists(sdkPath)) throw new Exception("SDK not found");
+            }
 
             var ptr = NativeLibrary.Load(sdkPath);
             if (ptr == nint.Zero) throw new Exception("Load SDK failed");

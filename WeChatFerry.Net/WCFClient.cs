@@ -3,9 +3,6 @@ using NLog;
 using nng;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection;
-using System.Xml;
-using WeChatFerry.Net.Models;
 
 namespace WeChatFerry.Net
 {

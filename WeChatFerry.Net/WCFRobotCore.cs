@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace WeChatFerry.Net
 {
-    public class WCFRobot
+    public class WCFRobotCore
     {
         public class Options
         {
@@ -17,7 +17,7 @@ namespace WeChatFerry.Net
             /// <summary>
             /// Find this SDKPath in the executable directory.
             /// </summary>
-            public string SDKPath { get; set; } = "sdk.dll";
+            public string SDKPath { get; set; } = string.Empty;
             /// <summary>
             /// If the Debug is true, must add spy_debug.dll in the SDKPath's directory.
             /// </summary>
@@ -52,7 +52,7 @@ namespace WeChatFerry.Net
         protected Task? _sendTask;
         protected bool _started;
 
-        public WCFRobot(Options? options = null)
+        public WCFRobotCore(Options? options = null)
         {
             _options = options ?? new Options();
             _wcfSDK = new(_options.SDKPath);
@@ -64,15 +64,19 @@ namespace WeChatFerry.Net
         public event EventHandler<WxMsg>? OnRecvMsg;
 
         /// <summary>
+        /// WCFClient instance.
+        /// </summary>
+        public WCFClient? WCFClient => _wcfClient;
+
+        /// <summary>
         /// Start the robot.
         /// </summary>
-        /// <param name="cts"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public async Task<bool> Start(CancellationTokenSource? cts = null, int timeout = 60)
+        public async Task<bool> Start(int timeout = 60)
         {
             if (_started) return false;
-            _cts = cts ?? new CancellationTokenSource();
+            _cts = new CancellationTokenSource();
             // 0. init SDK
             var ret = _wcfSDK.WxInitSDK(_options.Debug, _options.Port);
             if (ret != 0)

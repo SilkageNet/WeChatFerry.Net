@@ -1,7 +1,7 @@
 namespace WeChatFerry.Net.Tests
 {
     [TestClass]
-    public class SDKManagerTest
+    public class WCFSDKTest
     {
         [TestMethod]
         public void Main()
