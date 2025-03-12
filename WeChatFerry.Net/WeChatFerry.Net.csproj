@@ -34,4 +34,12 @@
     </None>
   </ItemGroup>
 
+  <Target Name="wcf" AfterTargets="Build">
+    <ItemGroup>
+      <Content Include="wcf\**">
+        <PackagePath>wcf</PackagePath>
+        <Visible>false</Visible>
+      </Content>
+    </ItemGroup>
+  </Target>
 </Project>

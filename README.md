@@ -12,22 +12,16 @@ A [WeChatFerry](https://github.com/lich0821/WeChatFerry) Client SDK based on .NE
 
 using WeChatFerry.Net;
 
-public class Program
+var robot = new WCFRobotCore();
+robot.OnRecvMsg += (s, e) => Console.WriteLine($"[{e.Type}] {e.Sender}:{e.Content}");
+if (!await robot.Start())
 {
-    public static async Task Main(string[] args)
-    {
-        var robot = new WCFRobotCore();
-        robot.OnRecvMsg += (s, e) => Console.WriteLine($"[{e.Type}] {e.Sender}:{e.Content}");
-        if (!robot.Start())
-        {
-            Console.WriteLine("Failed to start the robot.");
-            return;
-        }
-        robot.SendMsg(Message.CreateTxt("filehelper", "Hello, World!"));
-        Console.ReadLine();
-        robot.Stop();
-    }
+    Console.WriteLine("Failed to start the robot.");
+    return;
 }
+robot.SendMsg(Message.CreateTxt("filehelper", "Hello, World!"));
+Console.ReadLine();
+robot.Stop();
 
 ```
 
