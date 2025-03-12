@@ -1,5 +1,9 @@
 # WeChatFerry.Net
 
+![NuGet Version](https://img.shields.io/nuget/vpre/WeChatFerry.Net)
+![NuGet Downloads](https://img.shields.io/nuget/dt/WeChatFerry.Net)
+![License](https://img.shields.io/github/license/SilkageNet/WeChatFerry.Net)
+
 A [WeChatFerry](https://github.com/lich0821/WeChatFerry) Client SDK based on .NET.
 
 ## Usage
