@@ -8,6 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WeChatFerry.Net\WeChatFerry.Net.csproj" />
+    <PackageReference Include="WeChatFerry.Net" Version="1.0.2" />
   </ItemGroup>
 </Project>

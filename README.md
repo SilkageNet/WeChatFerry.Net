@@ -12,7 +12,7 @@ A [WeChatFerry](https://github.com/lich0821/WeChatFerry) Client SDK based on .NE
 
 using WeChatFerry.Net;
 
-var client = new WCFClient();
+using var client = new WCFClient();
 client.OnRecvMsg += (s, e) => Console.WriteLine($"[{e.Type}] {e.Sender}:{e.Content}");
 if (!await client.Start())
 {
@@ -21,8 +21,6 @@ if (!await client.Start())
 }
 client.SendMsg(Message.CreateTxt("filehelper", "Hello, World!"));
 Console.ReadLine();
-client.Stop();
-
 
 ```
 

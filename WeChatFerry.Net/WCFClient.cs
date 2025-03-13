@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace WeChatFerry.Net
 {
-    public class WCFClient
+    public class WCFClient : IDisposable
     {
         public class Options
         {
@@ -57,7 +57,7 @@ namespace WeChatFerry.Net
         public WCFClient(Options? options = null)
         {
             _options = options ?? new Options();
-            _logger = _options.Logger;
+            _logger = _options.Logger ?? new ConsoleLogger();
             _sdk = new(_options.SDKPath);
         }
 
@@ -249,6 +249,14 @@ namespace WeChatFerry.Net
             var assemblyPath = Path.GetDirectoryName(assembly.Location);
             var nngLoadContext = new NngLoadContext(assemblyPath);
             return NngLoadContext.Init(nngLoadContext, "nng.Factories.Latest.Factory");
+        }
+
+        public void Dispose()
+        {
+            Stop();
+            _cts?.Dispose();
+            _sdk.WxDestroy();
+            GC.SuppressFinalize(this);
         }
     }
 }
