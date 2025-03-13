@@ -1,71 +1,21 @@
 ﻿namespace WeChatFerry.Net
 {
-    public class Message
+    public class Message(Message.MessageType type, string receiver)
     {
         public enum MessageType
         {
             Txt, Img, File, Emotion, RichTxt, PatMsg, Forward
         }
 
-        public required MessageType Type { get; init; }
-        public required string Receiver { get; init; }
-        public string? Content { get; init; }
-        public List<string>? Aters { get; init; }
-        public RichText? RichTxt { get; init; }
-        public string? PatWxid { get; init; }
-        public ulong? ForwardMsgID { get; init; }
+        public MessageType Type { get; set; } = type;
+        public string Receiver { get; set; } = receiver;
+        public string? Content { get; set; }
+        public List<string>? Aters { get; set; }
+        public RichText? RichTxt { get; set; }
+        public string? PatWxid { get; set; }
+        public ulong? ForwardMsgID { get; set; }
 
-        public static Message CreateTxt(string receiver, string content, List<string>? aters = null) => new()
-        {
-            Type = MessageType.Txt,
-            Receiver = receiver,
-            Content = content,
-            Aters = aters
-        };
-
-        public static Message CreateImg(string receiver, string content) => new()
-        {
-            Type = MessageType.Img,
-            Receiver = receiver,
-            Content = content
-        };
-
-        public static Message CreateFile(string receiver, string content) => new()
-        {
-            Type = MessageType.File,
-            Receiver = receiver,
-            Content = content
-        };
-
-        public static Message CreateEmotion(string receiver, string content) => new()
-        {
-            Type = MessageType.Emotion,
-            Receiver = receiver,
-            Content = content
-        };
-
-        public static Message CreateRichText(string receiver, RichText richText) => new()
-        {
-            Type = MessageType.RichTxt,
-            Receiver = receiver,
-            RichTxt = richText
-        };
-
-        public static Message CreatePatMsg(string receiver, string patWxid) => new()
-        {
-            Type = MessageType.PatMsg,
-            Receiver = receiver,
-            PatWxid = patWxid
-        };
-
-        public static Message CreateForward(string receiver, ulong forwardMsgID) => new()
-        {
-            Type = MessageType.Forward,
-            Receiver = receiver,
-            ForwardMsgID = forwardMsgID
-        };
-
-        public bool SendWithClient(WCFClient wcfClient)
+        public bool SendWithClient(RPCCaller wcfClient)
         {
             switch (Type)
             {
@@ -88,5 +38,41 @@
                     return false;
             }
         }
+
+        public static Message CreateTxt(string receiver, string content, List<string>? aters = null) => new(MessageType.Txt, receiver)
+        {
+            Content = content,
+            Aters = aters
+        };
+
+        public static Message CreateImg(string receiver, string content) => new(MessageType.Img, receiver)
+        {
+            Content = content
+        };
+
+        public static Message CreateFile(string receiver, string content) => new(MessageType.File, receiver)
+        {
+            Content = content
+        };
+
+        public static Message CreateEmotion(string receiver, string content) => new(MessageType.Emotion, receiver)
+        {
+            Content = content
+        };
+
+        public static Message CreateRichText(string receiver, RichText richText) => new(MessageType.RichTxt, receiver)
+        {
+            RichTxt = richText
+        };
+
+        public static Message CreatePatMsg(string receiver, string patWxid) => new(MessageType.PatMsg, receiver)
+        {
+            PatWxid = patWxid
+        };
+
+        public static Message CreateForward(string receiver, ulong forwardMsgID) => new(MessageType.Forward, receiver)
+        {
+            ForwardMsgID = forwardMsgID
+        };
     }
 }

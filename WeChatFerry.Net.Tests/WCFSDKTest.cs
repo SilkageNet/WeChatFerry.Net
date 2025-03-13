@@ -6,10 +6,10 @@ namespace WeChatFerry.Net.Tests
         [TestMethod]
         public void Main()
         {
-            var skdManager = new WCFSDK("path/to/sdk");
-            var ret = skdManager.WxInitSDK(false, 6666);
+            var skdManager = new SDK("path/to/sdk");
+            var ret = skdManager.WxInit(false, 6666);
             Assert.AreEqual(0, ret);
-            ret = skdManager.WxDestroySDK();
+            ret = skdManager.WxDestroy();
             Assert.AreEqual(0, ret);
         }
     }

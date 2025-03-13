@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace WeChatFerry.Net
 {
-    public class WCFSDK
+    public class SDK
     {
         /// <summary>
         /// Inject SDK Delegate
@@ -11,25 +11,25 @@ namespace WeChatFerry.Net
         /// <param name="debug">Specify whether to enable debug mode</param>
         /// <param name="port">Specify the port number</param>
         /// <returns>0 if success, otherwise failed</returns>
-        public delegate int WxInitSDKDelegate(bool debug, int port);
+        public delegate int WxInitDelegate(bool debug, int port);
 
         /// <summary>
         /// Destroy SDK Delegate
         /// </summary>
         /// <returns>0 if success, otherwise failed</returns>
-        public delegate int WxDestroySDKDelegate();
+        public delegate int WxDestroyDelegate();
 
         /// <summary>
         /// Inject SDK
         /// </summary>
-        public WxInitSDKDelegate WxInitSDK;
+        public WxInitDelegate WxInit;
 
         /// <summary>
         /// Destroy SDK
         /// </summary>
-        public WxDestroySDKDelegate WxDestroySDK;
+        public WxDestroyDelegate WxDestroy;
 
-        public WCFSDK(string sdkPath)
+        public SDK(string sdkPath)
         {
             if (string.IsNullOrEmpty(sdkPath) || !File.Exists(sdkPath))
             {
@@ -43,13 +43,12 @@ namespace WeChatFerry.Net
             }
 
             var ptr = NativeLibrary.Load(sdkPath);
-            if (ptr == nint.Zero) throw new Exception("Load SDK failed");
-
+            if (ptr == IntPtr.Zero) throw new Exception("Load SDK failed");
             var initPtr = NativeLibrary.GetExport(ptr, "WxInitSDK");
             var destoryPtr = NativeLibrary.GetExport(ptr, "WxDestroySDK");
 
-            WxInitSDK = Marshal.GetDelegateForFunctionPointer<WxInitSDKDelegate>(initPtr);
-            WxDestroySDK = Marshal.GetDelegateForFunctionPointer<WxDestroySDKDelegate>(destoryPtr);
+            WxInit = Marshal.GetDelegateForFunctionPointer<WxInitDelegate>(initPtr);
+            WxDestroy = Marshal.GetDelegateForFunctionPointer<WxDestroyDelegate>(destoryPtr);
         }
     }
 }

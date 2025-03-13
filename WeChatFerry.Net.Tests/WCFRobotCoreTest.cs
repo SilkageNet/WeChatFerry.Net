@@ -6,7 +6,7 @@
         [TestMethod]
         public async Task Main()
         {
-            var robot = new WCFRobotCore();
+            var robot = new WCFClient();
             Assert.IsNotNull(robot);
             robot.OnRecvMsg += (s, e) => Console.WriteLine($"[{e.Type}] {e.Sender}:{e.Content}");
             await robot.Start();
