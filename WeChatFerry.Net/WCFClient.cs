@@ -134,7 +134,7 @@ namespace WeChatFerry.Net
             if (!_started) return;
             _started = false;
             _cts?.Cancel();
-            _sdk.WxDestroy();
+            //_sdk.WxDestroy(); // No destroy SDK, because it will cause the WeChat process not clean up.
             _recvTask?.Wait();
             _sendTask?.Wait();
         }
@@ -254,8 +254,6 @@ namespace WeChatFerry.Net
         public void Dispose()
         {
             Stop();
-            _cts?.Dispose();
-            _sdk.WxDestroy();
             GC.SuppressFinalize(this);
         }
     }
