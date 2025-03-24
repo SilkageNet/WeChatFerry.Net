@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <PackageId>WeChatFerry.Net</PackageId>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <Authors>Silkage</Authors>
     <Description>A WeChatFerry Client SDK based on .NET.</Description>
     <Copyright>Copyright 2025 Silkage</Copyright>
     <PackageTags>wechat, wechatferry, robot, ai</PackageTags>
     <RepositoryUrl>https://github.com/SilkageNet/WeChatFerry.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows;net8.0-windows</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>

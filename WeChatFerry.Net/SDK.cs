@@ -31,16 +31,18 @@ namespace WeChatFerry.Net
 
         public SDK(string sdkPath)
         {
-            if (string.IsNullOrEmpty(sdkPath) || !File.Exists(sdkPath))
+            if (string.IsNullOrEmpty(sdkPath))
             {
                 var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
                 var wcfDir = Path.Combine(dir, "wcf");
                 if (!Directory.Exists(wcfDir)) throw new Exception("WCF directory not found");
-                var maxVersionDir = Directory.GetDirectories(wcfDir).OrderByDescending(x => new Version(Path.GetFileName(x).TrimStart('v'))).FirstOrDefault();
-                if (maxVersionDir == null) throw new Exception("WCF version not found");
-                sdkPath = Path.Combine(maxVersionDir, "sdk.dll");
-                if (!File.Exists(sdkPath)) throw new Exception("SDK not found");
+                var versions = Directory.GetDirectories(wcfDir).OrderByDescending(x => new Version(Path.GetFileName(x).TrimStart('v')));
+                var weChatVersion = WeChatRegistry.Version;
+                var versionDir = (weChatVersion == null ? versions.FirstOrDefault() : versions.FirstOrDefault(x => new Version(Path.GetFileName(x).TrimStart('v')) == weChatVersion)) ?? throw new Exception("WCF version not found");
+                sdkPath = Path.Combine(versionDir, "sdk.dll");
             }
+
+            if (!File.Exists(sdkPath)) throw new Exception("SDK not found or not match WeChat version");
 
             var ptr = NativeLibrary.Load(sdkPath);
             if (ptr == IntPtr.Zero) throw new Exception("Load SDK failed");

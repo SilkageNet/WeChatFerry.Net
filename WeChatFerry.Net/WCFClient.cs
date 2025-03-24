@@ -21,6 +21,10 @@ namespace WeChatFerry.Net
             /// </summary>
             public bool Debug { get; set; }
             /// <summary>
+            /// Disable WeChat upgrade.
+            /// </summary>
+            public bool DisableWeChatUpgrade { get; set; } = true;
+            /// <summary>
             /// Message interval (milliseconds).
             /// </summary>
             public int MessageInterval { get; set; } = 2000;
@@ -80,6 +84,8 @@ namespace WeChatFerry.Net
         {
             if (_started) return false;
             _cts = new CancellationTokenSource();
+            // -1. disable WeChat upgrade
+            if (_options.DisableWeChatUpgrade) WeChatRegistry.NeedUpdateType = false;
             // 0. init SDK
             var ret = _sdk.WxInit(_options.Debug, _options.Port);
             if (ret != 0)
