@@ -2,6 +2,7 @@
 using nng;
 using System.Data;
 using System.Diagnostics;
+using System.Text;
 
 namespace WeChatFerry.Net
 {
@@ -172,17 +173,42 @@ namespace WeChatFerry.Net
             }
         }
 
+        internal enum DBFieldType : int
+        {
+            Unknown = 0,
+            Int = 1,
+            Single = 2,
+            String = 3,
+            Bytes = 4,
+            Null = 5
+        }
+
+        private static object? ConvertDBField(DBFieldType type, ByteString content) => type switch
+        {
+            DBFieldType.Int => BitConverter.ToInt32(content.ToByteArray()),
+            DBFieldType.Single => BitConverter.ToSingle(content.ToByteArray()),
+            DBFieldType.String => Encoding.UTF8.GetString(content.ToByteArray()),
+            DBFieldType.Bytes => content.ToByteArray(),
+            DBFieldType.Null => null,
+            _ => content.ToStringUtf8()
+        };
+
+        private static Type GetDBFieldColumnType(DBFieldType type) => type switch
+        {
+            DBFieldType.Int => typeof(int),
+            DBFieldType.Single => typeof(float),
+            DBFieldType.String => typeof(string),
+            DBFieldType.Bytes => typeof(byte[]),
+            DBFieldType.Null => typeof(object),
+            _ => typeof(string)
+        };
+
         public DataTable? ExecDBQuery(string db, string sql)
         {
             try
             {
                 var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
                 var res = CallRPC(req);
-                if (res.Status != 1)
-                {
-                    _logger?.Warn($"ExecDbQuery failed, status: {res.Status}");
-                    return null;
-                }
                 if (res.Rows == null)
                 {
                     _logger?.Error("ExecDbQuery failed, rows is null");
@@ -194,8 +220,9 @@ namespace WeChatFerry.Net
                     var row = dt.NewRow();
                     foreach (var item in r.Fields)
                     {
-                        if (!dt.Columns.Contains(item.Column)) dt.Columns.Add(item.Column);
-                        row[item.Column] = item.Type == 4 ? item.Content.ToBase64() : item.Content.ToStringUtf8();
+                        var type = (DBFieldType)item.Type;
+                        if (!dt.Columns.Contains(item.Column)) dt.Columns.Add(item.Column, GetDBFieldColumnType(type));
+                        row[item.Column] = ConvertDBField(type, item.Content);
                     }
                     dt.Rows.Add(row);
                 }
@@ -204,6 +231,36 @@ namespace WeChatFerry.Net
             catch (Exception ex)
             {
                 _logger?.Error("ExecDBQuery failed: {0}", ex);
+                return null;
+            }
+        }
+
+        public List<Dictionary<string, object?>>? ExecDBQueryOutputDict(string db, string sql)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
+                var res = CallRPC(req);
+                if (res.Rows == null)
+                {
+                    _logger?.Error("ExecDbQuery failed, rows is null");
+                    return null;
+                }
+                var result = new List<Dictionary<string, object?>>();
+                foreach (var r in res.Rows.Rows)
+                {
+                    var row = new Dictionary<string, object?>();
+                    foreach (var item in r.Fields)
+                    {
+                        row[item.Column] = ConvertDBField((DBFieldType)item.Type, item.Content);
+                    }
+                    result.Add(row);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("ExecDBQueryOutputDict failed: {0}", ex);
                 return null;
             }
         }

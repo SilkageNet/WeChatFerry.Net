@@ -73,7 +73,7 @@ namespace WeChatFerry.Net
         /// <summary>
         /// WCFClient instance.
         /// </summary>
-        public RPCCaller? RPCCaller => _caller;
+        public RPCCaller? Caller => _caller;
 
         /// <summary>
         /// Start the robot.
@@ -167,6 +167,12 @@ namespace WeChatFerry.Net
         }
 
         /// <summary>
+        /// Get all contacts.
+        /// </summary>
+        /// <returns></returns>
+        public List<RpcContact> GetContacts() => [.. _contacts.Values];
+
+        /// <summary>
         /// Loop receive message.
         /// </summary>
         /// <param name="msgSocket"></param>
@@ -183,6 +189,10 @@ namespace WeChatFerry.Net
                     OnRecvMsg?.Invoke(this, res.Wxmsg);
                     _logger?.Debug("RecvMsg: {0}", res.Wxmsg);
                 }
+            }
+            catch (TaskCanceledException)
+            {
+                _logger?.Info("LoopRecvMsg canceled");
             }
             catch (Exception ex)
             {
@@ -238,6 +248,10 @@ namespace WeChatFerry.Net
                     }
                     await Task.Delay(_options.MessageIntervalRandom, ct);
                 }
+            }
+            catch (TaskCanceledException)
+            {
+                _logger?.Info("LoopSendMsg canceled");
             }
             catch (Exception ex)
             {
