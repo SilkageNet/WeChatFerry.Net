@@ -31,16 +31,7 @@ namespace WeChatFerry.Net
 
         public SDK(string sdkPath)
         {
-            if (string.IsNullOrEmpty(sdkPath))
-            {
-                var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
-                var wcfDir = Path.Combine(dir, "wcf");
-                if (!Directory.Exists(wcfDir)) throw new Exception("WCF directory not found");
-                var versions = Directory.GetDirectories(wcfDir).OrderByDescending(x => new Version(Path.GetFileName(x).TrimStart('v')));
-                var weChatVersion = WeChatRegistry.Version;
-                var versionDir = (weChatVersion == null ? versions.FirstOrDefault() : versions.FirstOrDefault(x => new Version(Path.GetFileName(x).TrimStart('v')) == weChatVersion)) ?? throw new Exception("WCF version not found");
-                sdkPath = Path.Combine(versionDir, "sdk.dll");
-            }
+            if (string.IsNullOrEmpty(sdkPath)) sdkPath = HuntForSDKPath();
 
             if (!File.Exists(sdkPath)) throw new Exception("SDK not found or not match WeChat version");
 
@@ -51,6 +42,36 @@ namespace WeChatFerry.Net
 
             WxInit = Marshal.GetDelegateForFunctionPointer<WxInitDelegate>(initPtr);
             WxDestroy = Marshal.GetDelegateForFunctionPointer<WxDestroyDelegate>(destoryPtr);
+        }
+
+        private static string HuntForSDKPath()
+        {
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+            var wcfDir = Path.Combine(dir, "wcf");
+            if (!Directory.Exists(wcfDir)) throw new Exception("WCF directory not found");
+
+            var versions = Directory.GetDirectories(wcfDir)
+                .Select(it =>
+                {
+                    var weChatVersionFile = Path.Combine(it, "WeChatVersion.txt");
+                    if (!File.Exists(weChatVersionFile)) return null;
+                    return new { Version = new Version(File.ReadAllText(weChatVersionFile)), Path = it };
+                })
+                .Where(it => it != null)
+                .OrderByDescending(it => it!.Version);
+
+            if (!versions.Any()) throw new Exception("WCF version not found");
+
+            var versionDir = versions.FirstOrDefault()!.Path;
+
+            var weChatVersion = WeChatRegistry.Version;
+            if (weChatVersion != null)
+            {
+                var version = versions.FirstOrDefault(it => it!.Version == weChatVersion);
+                if (version != null) versionDir = version.Path;
+            }
+
+            return Path.Combine(versionDir, "sdk.dll");
         }
     }
 }
