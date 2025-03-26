@@ -507,7 +507,7 @@ namespace WeChatFerry.Net
         {
             try
             {
-                var req = new Request { Func = Functions.FuncAddRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",") } };
+                var req = new Request { Func = Functions.FuncAddRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
                 var res = CallRPC(req);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn("AddRoomMembers failed, status: {0}", res.Status);
@@ -524,7 +524,7 @@ namespace WeChatFerry.Net
         {
             try
             {
-                var req = new Request { Func = Functions.FuncDelRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",") } };
+                var req = new Request { Func = Functions.FuncDelRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
                 var res = CallRPC(req);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn("DelRoomMembers failed, status: {0}", res.Status);
@@ -541,7 +541,7 @@ namespace WeChatFerry.Net
         {
             try
             {
-                var req = new Request { Func = Functions.FuncInvRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",") } };
+                var req = new Request { Func = Functions.FuncInvRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
                 var res = CallRPC(req);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn("FuncInvRoomMembers failed, status: {0}", res.Status);
