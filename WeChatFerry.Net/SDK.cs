@@ -55,10 +55,16 @@ namespace WeChatFerry.Net
                 {
                     var weChatVersionFile = Path.Combine(it, "WeChatVersion.txt");
                     if (!File.Exists(weChatVersionFile)) return null;
-                    return new { Version = new Version(File.ReadAllText(weChatVersionFile)), Path = it };
+                    return new
+                    {
+                        Version = new Version(Path.GetFileName(it).Trim('v')),
+                        WeChatVersion = new Version(File.ReadAllText(weChatVersionFile)),
+                        Path = it,
+                    };
                 })
                 .Where(it => it != null)
-                .OrderByDescending(it => it!.Version);
+                .OrderByDescending(it => it!.WeChatVersion)
+                .ThenByDescending(it => it!.Version);
 
             if (!versions.Any()) throw new Exception("WCF version not found");
 
@@ -67,7 +73,7 @@ namespace WeChatFerry.Net
             var weChatVersion = WeChatRegistry.Version;
             if (weChatVersion != null)
             {
-                var version = versions.FirstOrDefault(it => it!.Version == weChatVersion);
+                var version = versions.FirstOrDefault(it => it!.WeChatVersion == weChatVersion);
                 if (version != null) versionDir = version.Path;
             }
 

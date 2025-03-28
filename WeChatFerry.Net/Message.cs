@@ -1,78 +1,70 @@
 ﻿namespace WeChatFerry.Net
 {
-    public class Message(Message.MessageType type, string receiver)
+    public enum MessageType : uint
     {
-        public enum MessageType
-        {
-            Txt, Img, File, Emotion, RichTxt, PatMsg, Forward
-        }
+        Pyq = 0,
+        Text = 1,
+        Image = 3,
+        Voice = 34,
+        ContactConfirm = 37,
+        PossibleFriend = 40,
+        BusinessCard = 42,
+        Video = 43,
+        Emoticon = 47,
+        Location = 48,
+        Link = 49,
+        Voip = 50,
+        WeChatInit = 51,
+        VoipNotify = 52,
+        VoipInvite = 53,
+        MiniVideo = 62,
+        WeChatRedPacket = 66,
+        File = 495,
+        Music = 496,
+        Article = 259,
+        GroupNote = 101,
+        SyncNotice = 9999,
+        System = 10000,
+        Recall = 10002,
+        SogouEmoticon = 1048625,
+        Links = 16777265,
+        RedPacket = 436207665,
+        RedPacketFace = 536936497,
+        VideoAccountVideo = 754974769,
+        VideoAccountBusinessCard = 771751985,
+        RefrenceMessage = 822083633,
+        Pat = 922746929,
+        VideoAccountLive = 973078577,
+        GoodsLink = 974127153,
+        VideoAccountLive2 = 975175729,
+        MusicLink = 1040187441,
+        File2 = 1090519089
+    }
 
-        public MessageType Type { get; set; } = type;
-        public string Receiver { get; set; } = receiver;
-        public string? Content { get; set; }
-        public List<string>? Aters { get; set; }
-        public RichText? RichTxt { get; set; }
-        public string? PatWxid { get; set; }
-        public ulong? ForwardMsgID { get; set; }
+    public class Message(WxMsg raw)
+    {
+        public WxMsg Raw { get; } = raw;
 
-        public bool SendWithClient(RPCCaller wcfClient)
-        {
-            switch (Type)
-            {
-                case MessageType.Txt:
-                    return wcfClient.SendTxt(Receiver, Content!, Aters);
-                case MessageType.Img:
-                    return wcfClient.SendImg(Receiver, Content!);
-                case MessageType.File:
-                    return wcfClient.SendFile(Receiver, Content!);
-                case MessageType.Emotion:
-                    return wcfClient.SendEmotion(Receiver, Content!);
-                case MessageType.RichTxt:
-                    RichTxt!.Receiver = Receiver;
-                    return wcfClient.SendRichTxt(RichTxt!);
-                case MessageType.PatMsg:
-                    return wcfClient.SendPatMsg(Receiver, PatWxid!);
-                case MessageType.Forward:
-                    return wcfClient.ForwardMsg(Receiver, ForwardMsgID!.Value);
-                default:
-                    return false;
-            }
-        }
+        public bool IsSelf => Raw.IsSelf;
 
-        public static Message CreateTxt(string receiver, string content, List<string>? aters = null) => new(MessageType.Txt, receiver)
-        {
-            Content = content,
-            Aters = aters
-        };
+        public bool IsGroup => Raw.IsGroup;
 
-        public static Message CreateImg(string receiver, string content) => new(MessageType.Img, receiver)
-        {
-            Content = content
-        };
+        public ulong ID => Raw.Id;
 
-        public static Message CreateFile(string receiver, string content) => new(MessageType.File, receiver)
-        {
-            Content = content
-        };
+        public MessageType Type => (MessageType)Raw.Type;
 
-        public static Message CreateEmotion(string receiver, string content) => new(MessageType.Emotion, receiver)
-        {
-            Content = content
-        };
+        public string RoomID => Raw.Roomid;
 
-        public static Message CreateRichText(string receiver, RichText richText) => new(MessageType.RichTxt, receiver)
-        {
-            RichTxt = richText
-        };
+        public string Content => Raw.Content;
 
-        public static Message CreatePatMsg(string receiver, string patWxid) => new(MessageType.PatMsg, receiver)
-        {
-            PatWxid = patWxid
-        };
+        public string Sender => Raw.Sender;
 
-        public static Message CreateForward(string receiver, ulong forwardMsgID) => new(MessageType.Forward, receiver)
-        {
-            ForwardMsgID = forwardMsgID
-        };
+        public string Sign => Raw.Sign;
+
+        public string Thumb => Raw.Thumb;
+
+        public string Extra => Raw.Extra;
+
+        public string Xml => Raw.Xml;
     }
 }

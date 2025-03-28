@@ -1,66 +1,29 @@
-﻿using nng;
+﻿using Google.Protobuf;
+using nng;
 using System.Collections.Concurrent;
 using System.Reflection;
 
 namespace WeChatFerry.Net
 {
-    public class WCFClient : IDisposable
+    public partial class WCFClient : IDisposable
     {
-        public class Options
-        {
-            /// <summary>
-            /// WCF server port, and message push port is port+1.
-            /// </summary>
-            public int Port { get; set; } = 6666;
-            /// <summary>
-            /// Find this SDKPath in the executable directory.
-            /// </summary>
-            public string SDKPath { get; set; } = string.Empty;
-            /// <summary>
-            /// If the Debug is true, must add spy_debug.dll in the SDKPath's directory.
-            /// </summary>
-            public bool Debug { get; set; }
-            /// <summary>
-            /// Disable WeChat upgrade.
-            /// </summary>
-            public bool DisableWeChatUpgrade { get; set; } = true;
-            /// <summary>
-            /// Message interval (milliseconds).
-            /// </summary>
-            public int MessageInterval { get; set; } = 2000;
-            /// <summary>
-            /// Message limit in minutes.
-            /// </summary>
-            public int MessageLimitInMinutes { get; set; } = 6;
-            /// <summary>
-            /// Logger.
-            /// </summary>
-            public ILogger? Logger { get; set; }
-
-            private readonly Random _random = new();
-            /// <summary>
-            /// Random message interval (milliseconds).
-            /// </summary>
-            public int MessageIntervalRandom => _random.Next(MessageInterval / 2, MessageInterval * 2);
-        }
-
         protected readonly IAPIFactory<INngMsg> _factory = InitNngAPIFactory();
         protected readonly ConcurrentDictionary<string, RpcContact> _contacts = new();
-        protected readonly ConcurrentQueue<Message> _msgQueue = new();
+        protected readonly ConcurrentQueue<PendingMessage> _msgQueue = new();
         protected readonly List<DateTime> _lastSendTimes = [];
-        protected readonly Options _options;
+        protected readonly WCFClientOptions _options;
         protected readonly ILogger? _logger;
         protected readonly SDK _sdk;
 
-        protected RPCCaller? _caller;
+        protected IPairSocket? _cmdSocket;
         protected CancellationTokenSource? _cts;
         protected Task? _recvTask;
         protected Task? _sendTask;
         protected bool _started;
 
-        public WCFClient(Options? options = null)
+        public WCFClient(WCFClientOptions? options = null)
         {
-            _options = options ?? new Options();
+            _options = options ?? new WCFClientOptions();
             _logger = _options.Logger ?? new ConsoleLogger();
             _sdk = new(_options.SDKPath);
         }
@@ -68,12 +31,7 @@ namespace WeChatFerry.Net
         /// <summary>
         /// The event will be triggered when receiving a message.
         /// </summary>
-        public event EventHandler<WxMsg>? OnRecvMsg;
-
-        /// <summary>
-        /// WCFClient instance.
-        /// </summary>
-        public RPCCaller? Caller => _caller;
+        public event EventHandler<Message>? OnRecvMsg;
 
         /// <summary>
         /// Start the robot.
@@ -94,17 +52,16 @@ namespace WeChatFerry.Net
                 return false;
             }
             // 1. connect to WCF cmd server
-            var cmdSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_options.Port}").Unwrap();
-            _caller = new RPCCaller(cmdSocket);
+            _cmdSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_options.Port}").Unwrap();
             // 2. wait for logined
-            var logined = await _caller.WaitForLogin(timeout);
+            var logined = await WaitForLogin(timeout);
             if (!logined)
             {
                 _logger?.Error("Login failed");
                 return false;
             }
             // 3. get all contacts
-            var contacts = _caller.GetContacts();
+            var contacts = RPCGetContacts();
             if (contacts == null)
             {
                 _logger?.Error("Get contacts failed");
@@ -112,15 +69,15 @@ namespace WeChatFerry.Net
             }
             _contacts.Clear();
             foreach (var contact in contacts) _contacts.TryAdd(contact.Wxid, contact);
-            var selfUser = _caller.GetUserInfo();
+            var selfUser = RPCGetUserInfo();
             if (selfUser == null)
             {
                 _logger?.Error("Get self user info failed");
                 return false;
             }
-            _contacts.TryAdd(selfUser.Wxid, selfUser.ToContact());
+            _contacts.TryAdd(selfUser.Wxid, new RpcContact { Wxid = selfUser.Wxid, Name = selfUser.Name });
             // 4. enable receive message
-            var ok = _caller.EnableRecvTxt();
+            var ok = RPCEnableRecvTxt();
             if (!ok) _logger?.Warn("Enable receive message failed"); // only warn, because it may be enabled
             // 5. connect to WCF message push server
             var msgSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_options.Port + 1}").Unwrap();
@@ -143,16 +100,6 @@ namespace WeChatFerry.Net
             //_sdk.WxDestroy(); // No destroy SDK, because it will cause the WeChat process not clean up.
             _recvTask?.Wait();
             _sendTask?.Wait();
-        }
-
-        /// <summary>
-        /// Send a message, the message will be sent in the next loop.
-        /// </summary>
-        /// <param name="msg"></param>
-        public void SendMsg(Message msg)
-        {
-            if (!_started) return;
-            _msgQueue.Enqueue(msg);
         }
 
         /// <summary>
@@ -186,7 +133,7 @@ namespace WeChatFerry.Net
                     var msg = msgSocket.RecvMsg().Unwrap();
                     var data = msg.AsSpan().ToArray();
                     var res = Response.Parser.ParseFrom(data);
-                    OnRecvMsg?.Invoke(this, res.Wxmsg);
+                    OnRecvMsg?.Invoke(this, new Message(res.Wxmsg));
                     _logger?.Debug("RecvMsg: {0}", res.Wxmsg);
                 }
             }
@@ -209,9 +156,9 @@ namespace WeChatFerry.Net
         {
             try
             {
-                if (_caller == null)
+                if (_cmdSocket == null)
                 {
-                    _logger?.Warn("WCFClient is null");
+                    _logger?.Warn("Cmd socket is null");
                     return;
                 }
 
@@ -236,7 +183,7 @@ namespace WeChatFerry.Net
                         {
                             await Task.Delay(messageIntervalRandom, ct);
                         }
-                        var ok = msg.SendWithClient(_caller);
+                        var ok = SendMessage(msg);
                         if (!ok)
                         {
                             _logger?.Warn("Send message failed: {0}", msg);
@@ -260,6 +207,47 @@ namespace WeChatFerry.Net
         }
 
         /// <summary>
+        /// Send message
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        private bool SendMessage(PendingMessage msg) => msg.Type switch
+        {
+            PendingMessage.MessageType.Txt => RPCSendTxt(msg.Receiver, msg.Content!, msg.Aters),
+            PendingMessage.MessageType.Img => RPCSendImg(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.File => RPCSendFile(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.Emotion => RPCSendEmotion(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.RichTxt => RPCSendRichTxt(msg.RichTxt!),
+            PendingMessage.MessageType.PatMsg => RPCSendPatMsg(msg.Receiver, msg.PatWxid!),
+            PendingMessage.MessageType.Forward => RPCForwardMsg(msg.Receiver, msg.ForwardMsgID!.Value),
+            _ => false,
+        };
+
+        /// <summary>
+        /// Call RPC.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public Response CallRPC(Request request)
+        {
+            if (_cmdSocket == null || !_cmdSocket.IsValid()) throw new Exception("CMD socket is not valid");
+            _cmdSocket.Send(request.ToByteArray());
+            var msg = _cmdSocket.RecvMsg().Unwrap();
+            var data = msg.AsSpan().ToArray();
+            return Response.Parser.ParseFrom(data);
+        }
+
+        /// <summary>
+        /// Dispose the object.
+        /// </summary>
+        public void Dispose()
+        {
+            Stop();
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
         /// Initialize Nng API Factory.
         /// </summary>
         /// <returns></returns>
@@ -269,12 +257,6 @@ namespace WeChatFerry.Net
             var assemblyPath = Path.GetDirectoryName(assembly.Location);
             var nngLoadContext = new NngLoadContext(assemblyPath);
             return NngLoadContext.Init(nngLoadContext, "nng.Factories.Latest.Factory");
-        }
-
-        public void Dispose()
-        {
-            Stop();
-            GC.SuppressFinalize(this);
         }
     }
 }
