@@ -1,11 +1,12 @@
 name: Release to NuGet
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -19,3 +20,16 @@ jobs:
         run: dotnet pack -c Release --output .
       - name: Push to NuGet
         run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: Automatically generated release for version ${{ github.ref }}
+          files: |
+            *.nupkg
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
