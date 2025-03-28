@@ -40,6 +40,24 @@ if (!await client.Start())
 //    }
 //}
 
-var msgTyps = client.RPCGetMsgTypes();
-Console.WriteLine($"MsgTypes: {JsonSerializer.Serialize(msgTyps)}");
+//var msgTyps = client.RPCGetMsgTypes();
+//Console.WriteLine($"MsgTypes: {JsonSerializer.Serialize(msgTyps)}");
+
+var dict = new Dictionary<string, List<DbTable>>();
+var dbList = client.RPCGetDBNames();
+foreach (var db in dbList)
+{
+    var tables = client.RPCGetDBTables(db);
+    foreach (var table in tables)
+    {
+        var sql = client.RPCExecDBQuery(db, $"SELECT sql FROM sqlite_master WHERE type = 'table' AND name = '{table.Name}';");
+        if (sql != null && sql.Rows.Count > 0)
+        {
+            table.Sql = sql.Rows[0]["sql"].ToString();
+        }
+    }
+
+    dict.Add(db, tables);
+}
+File.WriteAllText("db.json", JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true }));
 Console.ReadLine();

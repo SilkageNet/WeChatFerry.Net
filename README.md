@@ -10,7 +10,7 @@ A [WeChatFerry](https://github.com/lich0821/WeChatFerry) Client SDK based on .NE
 
 ## Preparation
 
-Install specified version of [WeChat](https://www.wechat.com/). The supported WeChat version depends on the WCF version. Currently, the default version is [3.9.12.17](https://github.com/lich0821/WeChatFerry/releases/download/v39.4.2/WeChatSetup-3.9.12.17.exe). For other WCF versions, you can download them yourself and specify them through `WCFClient.Options`.
+Install specified version of [WeChat](https://www.wechat.com/). The supported WeChat version depends on the WCF version. Currently, the default version is [3.9.12.17](https://github.com/lich0821/WeChatFerry/releases/download/v39.4.2/WeChatSetup-3.9.12.17.exe). For other WCF versions, you can download them yourself and specify them through `WCFClientOptions`.
 
 ## Installation
 
@@ -31,7 +31,7 @@ if (!await client.Start())
     Console.WriteLine("Failed to start the robot.");
     return;
 }
-client.SendMsg(Message.CreateTxt("filehelper", "Hello, World!"));
+client.SendTxt("filehelper", "Hello, World!");
 Console.ReadLine();
 
 ```

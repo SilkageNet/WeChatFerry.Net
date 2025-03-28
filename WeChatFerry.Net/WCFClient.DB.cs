@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WeChatFerry.Net
 {
-   public partial class WCFClient
+    public partial class WCFClient
     {
         public List<string> RPCGetDBNames()
         {
@@ -46,15 +46,25 @@ namespace WeChatFerry.Net
             Null = 5
         }
 
-        private static object? ConvertDBField(DBFieldType type, ByteString content) => type switch
+        private static object? ConvertDBField(DBFieldType type, ByteString content)
         {
-            DBFieldType.Int => BitConverter.ToInt32(content.ToByteArray()),
-            DBFieldType.Single => BitConverter.ToSingle(content.ToByteArray()),
-            DBFieldType.String => Encoding.UTF8.GetString(content.ToByteArray()),
-            DBFieldType.Bytes => content.ToByteArray(),
-            DBFieldType.Null => null,
-            _ => content.ToStringUtf8()
-        };
+            try
+            {
+                return type switch
+                {
+                    DBFieldType.Int => BitConverter.ToInt32(content.ToByteArray()),
+                    DBFieldType.Single => BitConverter.ToSingle(content.ToByteArray()),
+                    DBFieldType.String => Encoding.UTF8.GetString(content.ToByteArray()),
+                    DBFieldType.Bytes => content.ToByteArray(),
+                    DBFieldType.Null => null,
+                    _ => content.ToStringUtf8()
+                };
+            }
+            catch
+            {
+                return content.ToStringUtf8();
+            }
+        }
 
         private static Type GetDBFieldColumnType(DBFieldType type) => type switch
         {
