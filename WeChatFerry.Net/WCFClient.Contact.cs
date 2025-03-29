@@ -31,5 +31,37 @@
                 return null;
             }
         }
+
+        /// <summary>
+        /// Get a contact by wxid.
+        /// </summary>
+        /// <param name="wxid"></param>
+        /// <returns></returns>
+        public Contact? GetContact(string wxid)
+        {
+            if (!_contacts.TryGetValue(wxid, out var contact)) return null;
+            return contact;
+        }
+
+        /// <summary>
+        /// Get all contacts.
+        /// </summary>
+        /// <returns></returns>
+        public List<Contact> GetContacts() => [.. _contacts.Values];
+
+        /// <summary>
+        /// Refresh contacts.
+        /// </summary>
+        public void RefreshContacts()
+        {
+            var contacts = RPCGetContacts();
+            if (contacts == null) return;
+            contacts.ForEach(c =>
+            {
+                if (_contacts.TryGetValue(c.Wxid, out var contact)) contact.Update(c);
+                else _contacts.TryAdd(c.Wxid, new Contact(c));
+            });
+        }
+
     }
 }

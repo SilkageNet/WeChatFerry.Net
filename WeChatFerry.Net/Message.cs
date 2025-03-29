@@ -66,5 +66,7 @@
         public string Extra => Raw.Extra;
 
         public string Xml => Raw.Xml;
+
+        public override string ToString() => $"[{Type}] {Sender}: {Content}";
     }
 }

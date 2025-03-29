@@ -16,6 +16,7 @@
     <ExcludeRestorePackageImports>true</ExcludeRestorePackageImports>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <NoWarn>NU5100</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

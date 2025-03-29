@@ -8,7 +8,7 @@ namespace WeChatFerry.Net
     public partial class WCFClient : IDisposable
     {
         protected readonly IAPIFactory<INngMsg> _factory = InitNngAPIFactory();
-        protected readonly ConcurrentDictionary<string, RpcContact> _contacts = new();
+        protected readonly ConcurrentDictionary<string, Contact> _contacts = new();
         protected readonly ConcurrentQueue<PendingMessage> _msgQueue = new();
         protected readonly List<DateTime> _lastSendTimes = [];
         protected readonly WCFClientOptions _options;
@@ -68,14 +68,14 @@ namespace WeChatFerry.Net
                 return false;
             }
             _contacts.Clear();
-            foreach (var contact in contacts) _contacts.TryAdd(contact.Wxid, contact);
+            foreach (var contact in contacts) _contacts.TryAdd(contact.Wxid, new Contact(contact));
             var selfUser = RPCGetUserInfo();
             if (selfUser == null)
             {
                 _logger?.Error("Get self user info failed");
                 return false;
             }
-            _contacts.TryAdd(selfUser.Wxid, new RpcContact { Wxid = selfUser.Wxid, Name = selfUser.Name });
+            _contacts.TryAdd(selfUser.Wxid, new Contact(new RpcContact { Wxid = selfUser.Wxid, Name = selfUser.Name }));
             // 4. enable receive message
             var ok = RPCEnableRecvTxt();
             if (!ok) _logger?.Warn("Enable receive message failed"); // only warn, because it may be enabled
@@ -101,23 +101,6 @@ namespace WeChatFerry.Net
             _recvTask?.Wait();
             _sendTask?.Wait();
         }
-
-        /// <summary>
-        /// Get a contact by wxid.
-        /// </summary>
-        /// <param name="wxid"></param>
-        /// <returns></returns>
-        public RpcContact? GetContact(string wxid)
-        {
-            if (!_contacts.TryGetValue(wxid, out var contact)) return null;
-            return contact;
-        }
-
-        /// <summary>
-        /// Get all contacts.
-        /// </summary>
-        /// <returns></returns>
-        public List<RpcContact> GetContacts() => [.. _contacts.Values];
 
         /// <summary>
         /// Loop receive message.
