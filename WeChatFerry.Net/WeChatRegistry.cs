@@ -20,7 +20,7 @@ namespace WeChatFerry.Net
             get
             {
                 using var key = Registry.CurrentUser.OpenSubKey(WeChatKey);
-                return key?.GetValue(nameof(NeedUpdateType)) as int? == 1;
+                return key?.GetValue(nameof(NeedUpdateType)) as int? != 0;
             }
             set
             {
@@ -48,6 +48,29 @@ namespace WeChatFerry.Net
             byte patch = (byte)((v >> 8) & 0xFF);
             byte build = (byte)(v & 0xFF);
             return new Version(major, minor, patch, build);
+        }
+
+        public static void DisableUpgrade()
+        {
+            try
+            {
+                NeedUpdateType = false;
+                var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var wechatPath = Path.Combine(appDataPath, "Tencent", "WeChat", "All Users", "config", "configEx.ini");
+                if (File.Exists(wechatPath))
+                {
+                    var lines = File.ReadAllLines(wechatPath);
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (lines[i].Contains("NeedUpdateType") && lines[i].Trim() != "NeedUpdateType=0")
+                        {
+                            lines[i] = "NeedUpdateType=0";
+                            File.WriteAllLines(wechatPath, lines);
+                        }
+                    }
+                }
+            }
+            catch { }
         }
     }
 }

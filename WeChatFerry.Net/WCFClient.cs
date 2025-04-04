@@ -43,7 +43,7 @@ namespace WeChatFerry.Net
             if (_started) return false;
             _cts = new CancellationTokenSource();
             // -1. disable WeChat upgrade
-            if (_options.DisableWeChatUpgrade) WeChatRegistry.NeedUpdateType = false;
+            if (_options.DisableWeChatUpgrade) WeChatRegistry.DisableUpgrade();
             // 0. init SDK
             var ret = _sdk.WxInit(_options.Debug, _options.Port);
             if (ret != 0)

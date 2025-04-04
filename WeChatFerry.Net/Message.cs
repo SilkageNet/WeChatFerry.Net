@@ -53,6 +53,8 @@
 
         public MessageType Type => (MessageType)Raw.Type;
 
+        public DateTime Time => DateTimeOffset.FromUnixTimeSeconds(Raw.Ts).DateTime;
+
         public string RoomID => Raw.Roomid;
 
         public string Content => Raw.Content;
