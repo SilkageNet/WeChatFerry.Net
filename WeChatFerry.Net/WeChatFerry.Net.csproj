@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>WeChatFerry.Net</PackageId>
-    <PackageVersion>1.0.9</PackageVersion>
+    <PackageVersion>1.0.10</PackageVersion>
     <Authors>Silkage</Authors>
     <Description>A WeChatFerry Client SDK based on .NET.</Description>
     <Copyright>Copyright 2025 Silkage</Copyright>

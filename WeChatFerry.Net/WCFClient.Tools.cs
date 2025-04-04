@@ -34,23 +34,6 @@
             }
         }
 
-        public bool RPCAcceptFriend(string v3, string v4, int scene)
-        {
-            try
-            {
-                var req = new Request { Func = Functions.FuncAcceptFriend, V = new Verification { V3 = v3, V4 = v4, Scene = scene } };
-                var res = CallRPC(req);
-                var ok = res.Status == 1;
-                if (!ok) _logger?.Warn("AcceptFriend failed, status: {0}", res.Status);
-                return ok;
-            }
-            catch (Exception ex)
-            {
-                _logger?.Error("AddRoomMembers failed: {0}", ex);
-                return false;
-            }
-        }
-
         public bool RPCRecvTransfer(string wxid, string tfid, string taid)
         {
             try
