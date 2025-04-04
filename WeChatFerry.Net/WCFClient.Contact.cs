@@ -1,4 +1,6 @@
-﻿namespace WeChatFerry.Net
+﻿using System.Xml;
+
+namespace WeChatFerry.Net
 {
     public partial class WCFClient
     {
@@ -29,6 +31,23 @@
             {
                 _logger?.Error("GetContactInfo failed: {0}", ex);
                 return null;
+            }
+        }
+
+        public bool RPCAcceptFriend(string v3, string v4, int scene)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncAcceptFriend, V = new Verification { V3 = v3, V4 = v4, Scene = scene } };
+                var res = CallRPC(req);
+                var ok = res.Status == 1;
+                if (!ok) _logger?.Warn("AcceptFriend failed, status: {0}", res.Status);
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("AddRoomMembers failed: {0}", ex);
+                return false;
             }
         }
 
@@ -63,5 +82,27 @@
             });
         }
 
+        /// <summary>
+        /// Accept a friend request with the msg content.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public bool AcceptFriend(string content)
+        {
+            try
+            {
+                var xml = new XmlDocument();
+                xml.LoadXml(content);
+                var v3 = xml.SelectSingleNode("/msg/@encryptusername")?.Value ?? "";
+                var v4 = xml.SelectSingleNode("/msg/@ticket")?.Value ?? "";
+                var scene = int.Parse(xml.SelectSingleNode("/msg/@scene")?.Value ?? "0");
+                return RPCAcceptFriend(v3, v4, scene);
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("AcceptFriend failed: {0}", ex);
+                return false;
+            }
+        }
     }
 }
