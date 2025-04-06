@@ -54,7 +54,9 @@ namespace WeChatFerry.Net
         {
             try
             {
+                // Modify registry
                 NeedUpdateType = false;
+                // Modify configEx.ini
                 var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 var wechatPath = Path.Combine(appDataPath, "Tencent", "WeChat", "All Users", "config", "configEx.ini");
                 if (File.Exists(wechatPath))
@@ -68,6 +70,13 @@ namespace WeChatFerry.Net
                             File.WriteAllLines(wechatPath, lines);
                         }
                     }
+                }
+                // Delete patch directory
+                var programData = Environment.SpecialFolder.CommonApplicationData;
+                var patchDir = Path.Combine(Environment.GetFolderPath(programData), "Tencent", "WeChat", "patch");
+                if (Directory.Exists(patchDir))
+                {
+                    foreach (var dir in Directory.GetDirectories(patchDir)) Directory.Delete(dir, true);
                 }
             }
             catch { }
