@@ -19,7 +19,24 @@
 			}
 		}
 
-		public bool RPCDelRoomMembers(string roomID, List<string> wxids)
+        public async Task<bool> RPCAddRoomMembersAsync(string roomID, List<string> wxids, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncAddRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn("AddRoomMembers failed, status: {0}", res.Status);
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("AddRoomMembers failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public bool RPCDelRoomMembers(string roomID, List<string> wxids)
 		{
 			try
 			{
@@ -36,7 +53,24 @@
 			}
 		}
 
-		public bool RPCInvRoomMembers(string roomID, List<string> wxids)
+        public async Task<bool> RPCDelRoomMembersAsync(string roomID, List<string> wxids, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncDelRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn("DelRoomMembers failed, status: {0}", res.Status);
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("DelRoomMembers failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public bool RPCInvRoomMembers(string roomID, List<string> wxids)
 		{
 			try
 			{
@@ -52,5 +86,22 @@
 				return false;
 			}
 		}
-	}
+
+        public async Task<bool> RPCInvRoomMembersAsync(string roomID, List<string> wxids, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncInvRoomMembers, M = new MemberMgmt { Roomid = roomID, Wxids = string.Join(",", wxids) } };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn("FuncInvRoomMembers failed, status: {0}", res.Status);
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("InvRoomMembers failed: {0}", ex);
+                return false;
+            }
+        }
+    }
 }

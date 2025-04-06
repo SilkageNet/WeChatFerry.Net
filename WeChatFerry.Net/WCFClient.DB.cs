@@ -21,12 +21,42 @@ namespace WeChatFerry.Net
             }
         }
 
+        public async Task<List<string>> RPCGetDBNamesAsync(CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncGetDbNames };
+                var res = await CallRPCAsync(req, cts);
+                return res.Dbs?.Names?.ToList() ?? [];
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("GetDbNames failed: {0}", ex);
+                return [];
+            }
+        }
+
         public List<DbTable> RPCGetDBTables(string db)
         {
             try
             {
                 var req = new Request { Func = Functions.FuncGetDbTables, Str = db };
                 var res = CallRPC(req);
+                return res.Tables?.Tables.ToList() ?? [];
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("GetDbTables failed: {0}", ex);
+                return [];
+            }
+        }
+
+        public async Task<List<DbTable>> RPCGetDBTablesAsync(string db, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncGetDbTables, Str = db };
+                var res = await CallRPCAsync(req, cts);
                 return res.Tables?.Tables.ToList() ?? [];
             }
             catch (Exception ex)
@@ -108,6 +138,38 @@ namespace WeChatFerry.Net
             }
         }
 
+        public async Task<DataTable?> RPCExecDBQueryAsync(string db, string sql, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
+                var res = await CallRPCAsync(req, cts);
+                if (res.Rows == null)
+                {
+                    _logger?.Error("ExecDbQuery failed, rows is null");
+                    return null;
+                }
+                var dt = new DataTable();
+                foreach (var r in res.Rows.Rows)
+                {
+                    var row = dt.NewRow();
+                    foreach (var item in r.Fields)
+                    {
+                        var type = (DBFieldType)item.Type;
+                        if (!dt.Columns.Contains(item.Column)) dt.Columns.Add(item.Column, GetDBFieldColumnType(type));
+                        row[item.Column] = ConvertDBField(type, item.Content);
+                    }
+                    dt.Rows.Add(row);
+                }
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("ExecDBQuery failed: {0}", ex);
+                return null;
+            }
+        }
+
         public List<Dictionary<string, object?>>? RPCExecDBQueryOutputDict(string db, string sql)
         {
             try
@@ -134,6 +196,36 @@ namespace WeChatFerry.Net
             catch (Exception ex)
             {
                 _logger?.Error("ExecDBQueryOutputDict failed: {0}", ex);
+                return null;
+            }
+        }
+
+        public async Task<List<Dictionary<string, object?>>?> RPCExecDBQueryOutputDictAsync(string db, string sql, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncExecDbQuery, Query = new DbQuery { Db = db, Sql = sql } };
+                var res = await CallRPCAsync(req, cts);
+                if (res.Rows == null)
+                {
+                    _logger?.Error("ExecDbQuery failed, rows is null");
+                    return null;
+                }
+                var result = new List<Dictionary<string, object?>>();
+                foreach (var r in res.Rows.Rows)
+                {
+                    var row = new Dictionary<string, object?>();
+                    foreach (var item in r.Fields)
+                    {
+                        row[item.Column] = ConvertDBField((DBFieldType)item.Type, item.Content);
+                    }
+                    result.Add(row);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("ExecDbQueryOutputDict failed: {0}", ex);
                 return null;
             }
         }

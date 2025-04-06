@@ -12,7 +12,7 @@
         Video = 43,
         Emoticon = 47,
         Location = 48,
-        Link = 49,
+        FileOrLink = 49,
         Voip = 50,
         WeChatInit = 51,
         VoipNotify = 52,
@@ -53,7 +53,7 @@
 
         public MessageType Type => (MessageType)Raw.Type;
 
-        public DateTime Time => DateTimeOffset.FromUnixTimeSeconds(Raw.Ts).DateTime;
+        public DateTime Time => DateTimeOffset.FromUnixTimeSeconds(Raw.Ts).DateTime.ToLocalTime();
 
         public string RoomID => Raw.Roomid;
 

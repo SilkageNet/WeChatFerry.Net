@@ -29,6 +29,10 @@
         /// Logger.
         /// </summary>
         public ILogger? Logger { get; set; }
+        /// <summary>
+        /// RPC timeout (milliseconds).
+        /// </summary>
+        public int RPCTimeout { get; set; } = 10000;
 
         private readonly Random _random = new();
         /// <summary>

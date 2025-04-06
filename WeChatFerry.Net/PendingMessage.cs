@@ -66,5 +66,7 @@
                 Type = type
             }
         };
+
+        public override string ToString() => $"[{Type}] {Receiver}: {Content}";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using nng;
+using nng.Native;
 using System.Collections.Concurrent;
 using System.Reflection;
 
@@ -16,6 +17,7 @@ namespace WeChatFerry.Net
         protected readonly SDK _sdk;
 
         protected IPairSocket? _cmdSocket;
+        protected ISendReceiveAsyncContext<INngMsg>? _cmdAsyncContext;
         protected CancellationTokenSource? _cts;
         protected Task? _recvTask;
         protected Task? _sendTask;
@@ -37,11 +39,12 @@ namespace WeChatFerry.Net
         /// Start the robot.
         /// </summary>
         /// <param name="timeout"></param>
+        /// <param name="timeout"></param>
         /// <returns></returns>
-        public async Task<bool> Start(int timeout = 60)
+        public async Task<bool> Start(int timeout = 60, CancellationTokenSource? cts = null)
         {
             if (_started) return false;
-            _cts = new CancellationTokenSource();
+            _cts = cts ?? new CancellationTokenSource();
             // -1. disable WeChat upgrade
             if (_options.DisableWeChatUpgrade) WeChatRegistry.DisableUpgrade();
             // 0. init SDK
@@ -53,15 +56,17 @@ namespace WeChatFerry.Net
             }
             // 1. connect to WCF cmd server
             _cmdSocket = _factory.PairOpen().ThenDial($"tcp://127.0.0.1:{_options.Port}").Unwrap();
+            _cmdAsyncContext = _cmdSocket.CreateAsyncContext(_factory).Unwrap();
+            _cmdAsyncContext.Aio.SetTimeout(_options.RPCTimeout);
             // 2. wait for logined
-            var logined = await WaitForLogin(timeout);
+            var logined = await WaitForLogin(timeout, _cts);
             if (!logined)
             {
                 _logger?.Error("Login failed");
                 return false;
             }
             // 3. get all contacts
-            var contacts = RPCGetContacts();
+            var contacts = await RPCGetContactsAsync();
             if (contacts == null)
             {
                 _logger?.Error("Get contacts failed");
@@ -69,7 +74,7 @@ namespace WeChatFerry.Net
             }
             _contacts.Clear();
             foreach (var contact in contacts) _contacts.TryAdd(contact.Wxid, new Contact(contact));
-            var selfUser = RPCGetUserInfo();
+            var selfUser = await RPCGetUserInfoAsync();
             if (selfUser == null)
             {
                 _logger?.Error("Get self user info failed");
@@ -116,8 +121,9 @@ namespace WeChatFerry.Net
                     var msg = msgSocket.RecvMsg().Unwrap();
                     var data = msg.AsSpan().ToArray();
                     var res = Response.Parser.ParseFrom(data);
-                    OnRecvMsg?.Invoke(this, new Message(res.Wxmsg));
-                    _logger?.Debug("RecvMsg: {0}", res.Wxmsg);
+                    var message = new Message(res.Wxmsg);
+                    OnRecvMsg?.Invoke(this, message);
+                    _logger?.Debug("RecvMsg: {0}", message);
                 }
             }
             catch (TaskCanceledException)
@@ -166,7 +172,7 @@ namespace WeChatFerry.Net
                         {
                             await Task.Delay(messageIntervalRandom, ct);
                         }
-                        var ok = SendMessage(msg);
+                        var ok = await SendMessageAsync(msg);
                         if (!ok)
                         {
                             _logger?.Warn("Send message failed: {0}", msg);
@@ -189,20 +195,32 @@ namespace WeChatFerry.Net
             }
         }
 
-        /// <summary>
-        /// Send message
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        private bool SendMessage(PendingMessage msg) => msg.Type switch
+        ///// <summary>
+        ///// Send message
+        ///// </summary>
+        ///// <param name="msg"></param>
+        ///// <returns></returns>
+        //private bool SendMessage(PendingMessage msg) => msg.Type switch
+        //{
+        //    PendingMessage.MessageType.Txt => RPCSendTxt(msg.Receiver, msg.Content!, msg.Aters),
+        //    PendingMessage.MessageType.Img => RPCSendImg(msg.Receiver, msg.Content!),
+        //    PendingMessage.MessageType.File => RPCSendFile(msg.Receiver, msg.Content!),
+        //    PendingMessage.MessageType.Emotion => RPCSendEmotion(msg.Receiver, msg.Content!),
+        //    PendingMessage.MessageType.RichTxt => RPCSendRichTxt(msg.RichTxt!),
+        //    PendingMessage.MessageType.PatMsg => RPCSendPatMsg(msg.Receiver, msg.PatWxid!),
+        //    PendingMessage.MessageType.Forward => RPCForwardMsg(msg.Receiver, msg.ForwardMsgID!.Value),
+        //    _ => false,
+        //};
+
+        private async Task<bool> SendMessageAsync(PendingMessage msg) => msg.Type switch
         {
-            PendingMessage.MessageType.Txt => RPCSendTxt(msg.Receiver, msg.Content!, msg.Aters),
-            PendingMessage.MessageType.Img => RPCSendImg(msg.Receiver, msg.Content!),
-            PendingMessage.MessageType.File => RPCSendFile(msg.Receiver, msg.Content!),
-            PendingMessage.MessageType.Emotion => RPCSendEmotion(msg.Receiver, msg.Content!),
-            PendingMessage.MessageType.RichTxt => RPCSendRichTxt(msg.RichTxt!),
-            PendingMessage.MessageType.PatMsg => RPCSendPatMsg(msg.Receiver, msg.PatWxid!),
-            PendingMessage.MessageType.Forward => RPCForwardMsg(msg.Receiver, msg.ForwardMsgID!.Value),
+            PendingMessage.MessageType.Txt => await RPCSendTxtAsync(msg.Receiver, msg.Content!, msg.Aters),
+            PendingMessage.MessageType.Img => await RPCSendImgAsync(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.File => await RPCSendFileAsync(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.Emotion => await RPCSendEmotionAsync(msg.Receiver, msg.Content!),
+            PendingMessage.MessageType.RichTxt => await RPCSendRichTxtAsync(msg.RichTxt!),
+            PendingMessage.MessageType.PatMsg => await RPCSendPatMsgAsync(msg.Receiver, msg.PatWxid!),
+            PendingMessage.MessageType.Forward => await RPCForwardMsgAsync(msg.Receiver, msg.ForwardMsgID!.Value),
             _ => false,
         };
 
@@ -217,6 +235,28 @@ namespace WeChatFerry.Net
             if (_cmdSocket == null || !_cmdSocket.IsValid()) throw new Exception("CMD socket is not valid");
             _cmdSocket.Send(request.ToByteArray());
             var msg = _cmdSocket.RecvMsg().Unwrap();
+            var data = msg.AsSpan().ToArray();
+            return Response.Parser.ParseFrom(data);
+        }
+
+        /// <summary>
+        /// Call RPC asynchronously.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cts"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Response> CallRPCAsync(Request request, CancellationTokenSource? cts = null)
+        {
+            if (_cmdSocket == null || !_cmdSocket.IsValid() || _cmdAsyncContext == null) throw new Exception("CMD socket is not valid");
+            cts ??= new CancellationTokenSource();
+            var message = _factory.CreateMessage();
+            message.Append(request.ToByteArray());
+            var sendRsp = await _cmdAsyncContext.Send(message);
+            if (sendRsp.IsErr()) throw new Exception($"SendMsg failed: {sendRsp.Err()}");
+            var recvRsp = await _cmdAsyncContext.Receive(cts.Token);
+            if (recvRsp.IsErr()) throw new Exception($"RecvMsg failed: {recvRsp.Err()}");
+            var msg = recvRsp.Unwrap();
             var data = msg.AsSpan().ToArray();
             return Response.Parser.ParseFrom(data);
         }

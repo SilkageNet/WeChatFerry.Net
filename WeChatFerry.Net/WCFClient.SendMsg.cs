@@ -28,6 +28,32 @@
             }
         }
 
+        public async Task<bool> RPCSendTxtAsync(string receiver, string msg, List<string>? aters = null, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendTxt,
+                    Txt = new TextMsg
+                    {
+                        Receiver = receiver,
+                        Msg = msg,
+                        Aters = aters?.Count > 0 ? string.Join(",", aters) : ""
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendTxt failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendTxt failed: {0}", ex);
+                return false;
+            }
+        }
+
         public bool RPCSendImg(string receiver, string path)
         {
             try
@@ -42,6 +68,31 @@
                     }
                 };
                 var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendImg failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendImg failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> RPCSendImgAsync(string receiver, string path, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendImg,
+                    File = new PathMsg
+                    {
+                        Receiver = receiver,
+                        Path = path
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn($"SendImg failed, status: {res.Status}");
                 return ok;
@@ -78,6 +129,31 @@
             }
         }
 
+        public async Task<bool> RPCSendFileAsync(string receiver, string path, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendFile,
+                    File = new PathMsg
+                    {
+                        Receiver = receiver,
+                        Path = path
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendFile failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendFile failed: {0}", ex);
+                return false;
+            }
+        }
+
         public bool RPCSendEmotion(string receiver, string path)
         {
             try
@@ -92,6 +168,31 @@
                     }
                 };
                 var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendEmotion failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendEmotion failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> RPCSendEmotionAsync(string receiver, string path, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendEmotion,
+                    File = new PathMsg
+                    {
+                        Receiver = receiver,
+                        Path = path
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn($"SendEmotion failed, status: {res.Status}");
                 return ok;
@@ -124,6 +225,27 @@
             }
         }
 
+        public async Task<bool> RPCSendRichTxtAsync(RichText richText, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendRichTxt,
+                    Rt = richText
+                };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendRichTxt failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendRichTxt failed: {0}", ex);
+                return false;
+            }
+        }
+
         public bool RPCSendPatMsg(string roomID, string wxid)
         {
             try
@@ -134,6 +256,27 @@
                     Pm = new PatMsg { Roomid = roomID, Wxid = wxid }
                 };
                 var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"SendPat failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendPatMsg failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> RPCSendPatMsgAsync(string roomID, string wxid, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendPatMsg,
+                    Pm = new PatMsg { Roomid = roomID, Wxid = wxid }
+                };
+                var res = await CallRPCAsync(req, cts);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn($"SendPat failed, status: {res.Status}");
                 return ok;
@@ -172,6 +315,33 @@
             }
         }
 
+        public async Task<bool> RPCSendXmlAsync(string receiver, string path, string content, ulong type, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncSendXml,
+                    Xml = new XmlMsg
+                    {
+                        Receiver = receiver,
+                        Path = path,
+                        Content = content,
+                        Type = type
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn("SendXml failed, status: {0}", res.Status);
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("SendXml failed: {0}", ex);
+                return false;
+            }
+        }
+
         public bool RPCForwardMsg(string receiver, ulong msgID)
         {
             try
@@ -197,12 +367,54 @@
             }
         }
 
+        public async Task<bool> RPCForwardMsgAsync(string receiver, ulong msgID, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request
+                {
+                    Func = Functions.FuncForwardMsg,
+                    Fm = new ForwardMsg
+                    {
+                        Receiver = receiver,
+                        Id = msgID
+                    }
+                };
+                var res = await CallRPCAsync(req, cts);
+                var ok = res.Status == 1;
+                if (!ok) _logger?.Warn($"ForwardMsg failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("ForwardMsg failed: {0}", ex);
+                return false;
+            }
+        }
+
         public bool RPCRevokeMsg(ulong id)
         {
             try
             {
                 var req = new Request { Func = Functions.FuncRevokeMsg, Ui64 = id };
                 var res = CallRPC(req);
+                var ok = res.Status == 0;
+                if (!ok) _logger?.Warn($"RevokeMsg failed, status: {res.Status}");
+                return ok;
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error("RevokeMsg failed: {0}", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> RPCRevokeMsgAsync(ulong id, CancellationTokenSource? cts = null)
+        {
+            try
+            {
+                var req = new Request { Func = Functions.FuncRevokeMsg, Ui64 = id };
+                var res = await CallRPCAsync(req, cts);
                 var ok = res.Status == 0;
                 if (!ok) _logger?.Warn($"RevokeMsg failed, status: {res.Status}");
                 return ok;

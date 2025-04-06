@@ -32,6 +32,8 @@ if (!await client.Start())
     return;
 }
 client.SendTxt("filehelper", "Hello, World!");
+var selfWxid = await client.RPCGetSelfWxidAsync();
+Console.WriteLine($"Self wxid: {selfWxid}");
 Console.ReadLine();
 
 ```
